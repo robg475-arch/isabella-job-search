@@ -95,6 +95,10 @@
   .tag-governmentjobs { background: #fce7f3; color: #9d174d; }
   .tag-csi { background: #f0fdf4; color: #15803d; }
   .arrow { color: #a0aec0; font-size: 14px; }
+  .jtag-date { background: #f1f5f9; color: #475569; }
+  .jtag-expired { background: #fff7ed; color: #c2410c; }
+  .jtag-new { background: #dcfce7; color: #15803d; }
+  .jcard-expired { opacity: 0.65; }
 
   /* TIPS */
   .tips-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 12px; }
@@ -251,9 +255,7 @@
   <div class="section active" id="tab-listings">
     <div class="listings-toolbar" id="filterBar"></div>
     <div class="job-list" id="jobList"></div>
-    <p style="font-size:11px;color:#a0aec0;margin-top:18px;text-align:center;">
-      Listings last updated April 28, 2026 · Ask Dad to refresh with Claude for the latest results
-    </p>
+    <p style="font-size:11px;color:#a0aec0;margin-top:18px;text-align:center;" id="listings-footer"></p>
   </div>
 
   <!-- ══ FORENSICS SEARCH LINKS ══ -->
@@ -518,7 +520,8 @@
 
 <div class="footer">
   Built for Isabella · UGA Criminal Justice Class of 2026 · Woodstock, GA area<br>
-  <span style="color:#cbd5e0;">Listings updated April 28, 2026 — Ask Dad to refresh with Claude for the latest!</span>
+  <span style="color:#cbd5e0;" id="footer-date"></span>
+  <script>document.getElementById('footer-date').textContent = 'Listings updated ' + fmtDate(latestDate()) + ' — Ask Dad to refresh with Claude for the latest!';</script>
 </div>
 
 <script>
@@ -531,101 +534,108 @@ function showTab(id, btn) {
 }
 
 // ── INDIVIDUAL LISTINGS DATA ──
+// ── HOW TO UPDATE LISTINGS ──
+// When adding new jobs: append new entries to the TOP of the JOBS array with
+// dateAdded set to today's date (YYYY-MM-DD). Never delete old entries —
+// instead set expired: true on any that have closed. The dashboard will
+// show "⚠️ Closed" on expired listings and keep them visible for reference.
+
 const JOBS = [
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Scene Technician I',
     employer: 'Henry County Sheriff\'s Office',
     location: 'Henry County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/4458358',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Scene Technician',
     employer: 'City of East Point',
     location: 'East Point, GA (near Atlanta)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/eastpointga/jobs/4891549/crime-scene-technician',
-    hot: true, note: 'Deadline May 15, 2026' },
+    hot: true, note: 'Deadline May 15, 2026', dateAdded: '2026-04-28', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Lab Scientist',
     employer: 'Georgia Bureau of Investigation (GBI)',
     location: 'Statewide, GA', source: 'GBI',
     url: 'https://gbi.georgia.gov/crime-lab-scientist',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Forensic Sciences Career Opportunities',
     employer: 'GBI Division of Forensic Sciences',
     location: 'Statewide, GA', source: 'GBI',
     url: 'https://dofs-gbi.georgia.gov/career-opportunities',
-    hot: false, note: 'Multiple roles posted' },
+    hot: false, note: 'Multiple roles posted', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Court Associate I — Clerk of Recorder\'s Court',
     employer: 'Gwinnett County Government',
     location: 'Gwinnett County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/gwinnett/jobs/newprint/5206223',
-    hot: false, note: 'Posted Feb 2026' },
+    hot: false, note: 'Posted Feb 2026', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Criminal Justice Specialist — Sheriff\'s Office',
     employer: 'Cobb County Government',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/4785617/criminal-justice-specialist-sheriffs-office',
-    hot: true, note: null },
+    hot: true, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Open Court & Office Positions',
     employer: 'Cherokee County Government (Official Portal)',
     location: 'Cherokee County, GA', source: 'Cherokee County Direct',
     url: 'https://jobs.cherokeega.org/',
-    hot: false, note: '105 positions listed' },
+    hot: false, note: '105 positions listed', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Legal Assistant Jobs — Kennesaw, GA',
     employer: 'Multiple Employers',
     location: 'Kennesaw, GA', source: 'Indeed',
     url: 'https://www.indeed.com/q-legal-assistant-l-kennesaw,-ga-jobs.html',
-    hot: false, note: '203 entry-level listings' },
+    hot: false, note: '203 entry-level listings', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Legal Assistant Jobs — Marietta, GA',
     employer: 'Multiple Employers',
     location: 'Marietta, GA', source: 'CareerBuilder',
     url: 'https://www.careerbuilder.com/jobs-legal-assistant-in-marietta,ga',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate',
     employer: 'Cobb County Solicitor General\'s Office',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/4279140',
-    hot: true, note: 'Opened Jan 27, 2026' },
+    hot: true, note: 'Opened Jan 27, 2026', dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Part-Time Victim Advocate Counselor',
     employer: 'Cobb County Solicitor\'s Office',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/4547196',
-    hot: false, note: 'Part-time / flexible' },
+    hot: false, note: 'Part-time / flexible', dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate I',
     employer: 'Chatham County District Attorney',
     location: 'Chatham County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/chathamcounty/jobs/newprint/4552606',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate — Cherokee, Cobb & Clayton',
     employer: 'Prosecuting Attorneys\' Council of Georgia (PACGA)',
     location: 'Cherokee / Cobb / Clayton County', source: 'PACGA',
     url: 'https://pacga.org/employment-opportunities/position-title/victim-witness-advocate/',
-    hot: false, note: 'Multi-county positions' },
+    hot: false, note: 'Multi-county positions', dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Probation Officer',
     employer: 'Cobb County Government',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/3050251',
-    hot: false, note: 'Req. CJ degree' },
+    hot: false, note: 'Req. CJ degree', dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'County Probation Officer Jobs — Georgia',
     employer: 'Multiple Counties',
     location: 'North Georgia / Cherokee area', source: 'ZipRecruiter',
     url: 'https://www.ziprecruiter.com/Jobs/County-Probation-Officer/--in-Georgia',
-    hot: false, note: '$38k–$95k range' },
+    hot: false, note: '$38k–$95k range', dateAdded: '2026-04-28', expired: false },
 ];
 
 const FILTERS = [
   { id: 'all',       label: 'All Jobs' },
+  { id: 'new',       label: '🆕 New' },
   { id: 'forensics', label: '🔬 Forensics' },
   { id: 'court',     label: '⚖️ Court & Office' },
   { id: 'govt',      label: '🏛️ Gov & Services' },
@@ -633,14 +643,36 @@ const FILTERS = [
 
 let activeFilter = 'all';
 
+// ── DATE HELPERS ──
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const added = new Date(dateStr + 'T12:00:00');
+  const daysDiff = (new Date() - added) / (1000 * 60 * 60 * 24);
+  return daysDiff <= 14;
+}
+
+function latestDate() {
+  return JOBS.map(j => j.dateAdded).filter(Boolean).sort().reverse()[0] || null;
+}
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '';
+  return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 function buildFilterBar() {
+  const latest = fmtDate(latestDate());
+  const newCount = JOBS.filter(j => isNew(j.dateAdded)).length;
   document.getElementById('filterBar').innerHTML =
     FILTERS.map(f => {
-      const count = f.id === 'all' ? JOBS.length : JOBS.filter(j => j.cat === f.id).length;
+      let count;
+      if (f.id === 'all')  count = JOBS.length;
+      else if (f.id === 'new') count = newCount;
+      else count = JOBS.filter(j => j.cat === f.id).length;
       return `<button class="filter-chip${f.id === activeFilter ? ' active' : ''}"
         onclick="setFilter('${f.id}', this)">${f.label} <span class="n">${count}</span></button>`;
     }).join('') +
-    `<span class="listings-meta">Updated Apr 28, 2026</span>`;
+    `<span class="listings-meta">Updated ${latest}</span>`;
 }
 
 function setFilter(id, btn) {
@@ -651,7 +683,9 @@ function setFilter(id, btn) {
 }
 
 function renderJobs() {
-  const filtered = activeFilter === 'all' ? JOBS : JOBS.filter(j => j.cat === activeFilter);
+  const filtered = activeFilter === 'all' ? JOBS
+    : activeFilter === 'new' ? JOBS.filter(j => isNew(j.dateAdded))
+    : JOBS.filter(j => j.cat === activeFilter);
   const list = document.getElementById('jobList');
   if (!filtered.length) { list.innerHTML = '<p style="color:#a0aec0;padding:20px 0">No listings in this category.</p>'; return; }
 
@@ -672,7 +706,10 @@ function renderJobs() {
 function cardHTML(j) {
   const titleEsc = j.title.replace(/'/g, "\\'");
   const employerEsc = j.employer.replace(/'/g, "\\'");
-  return `<div class="jcard">
+  const newBadge  = (!j.expired && isNew(j.dateAdded)) ? '<span class="jtag jtag-new">🆕 New</span>' : '';
+  const dateBadge = j.dateAdded ? `<span class="jtag jtag-date">📅 ${fmtDate(j.dateAdded)}</span>` : '';
+  const expiredBadge = j.expired ? '<span class="jtag jtag-expired">⚠️ Closed</span>' : '';
+  return `<div class="jcard${j.expired ? ' jcard-expired' : ''}">
     <div class="jcard-top">
       <span class="jcard-icon">${j.icon}</span>
       <div class="jcard-body">
@@ -681,12 +718,15 @@ function cardHTML(j) {
         <div class="jcard-tags">
           <span class="jtag jtag-loc">📍 ${j.location}</span>
           <span class="jtag jtag-src">${j.source}</span>
+          ${newBadge}
           ${j.hot ? '<span class="jtag jtag-hot">🔥 Hot Listing</span>' : ''}
           ${j.note ? `<span class="jtag jtag-note">📌 ${j.note}</span>` : ''}
+          ${dateBadge}
+          ${expiredBadge}
         </div>
         <div class="jcard-actions">
           <a class="jcard-apply" href="${j.url}" target="_blank">View &amp; Apply →</a>
-          <button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${j.location}')">✍️ Build Application</button>
+          ${!j.expired ? `<button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${j.location}')">✍️ Build Application</button>` : ''}
         </div>
       </div>
     </div>
@@ -695,6 +735,8 @@ function cardHTML(j) {
 
 buildFilterBar();
 renderJobs();
+document.getElementById('listings-footer').textContent =
+  `Listings last updated ${fmtDate(latestDate())} · Ask Dad to refresh with Claude for the latest results`;
 
 // ── OPEN APPLY TAB (pre-filled from job card) ──
 function openApply(title, employer, location) {
