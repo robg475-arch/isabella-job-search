@@ -241,7 +241,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">15</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">18</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -541,6 +541,24 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Criminal Case Coordinator',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5128574',
+    hot: false, note: '$47k–$62k salary', dateAdded: '2026-04-30', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Parental Accountability Coordinator 2',
+    employer: 'Georgia Department of Human Services',
+    location: 'Statewide, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/dhsgeorgia/jobs/newprint/5247949',
+    hot: false, note: 'Req. CJ degree + 2 yrs judicial exp.', dateAdded: '2026-04-30', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Community Supervision Officer I',
+    employer: 'Georgia Department of Community Supervision',
+    location: 'Statewide, GA (incl. Marietta/Canton)', source: 'GA DCS',
+    url: 'https://dcs.georgia.gov/dcs-careers/opportunities',
+    hot: false, note: 'Multiple NW Georgia offices', dateAdded: '2026-04-30', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Scene Technician I',
     employer: 'Henry County Sheriff\'s Office',
