@@ -241,7 +241,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">25</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">28</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -645,6 +645,24 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim/Witness Advocate',
+    employer: 'Fulton County District Attorney\'s Office',
+    location: 'Atlanta, Fulton County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/fulton/jobs/newprint/5051440',
+    hot: false, note: 'BA in CJ or related req.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Deputy Court Clerk 2026',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/gGuKkSbT2S/Deputy-Court-Clerk-2026',
+    hot: false, note: '$17.88–$20.38/hr, open until filled', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Police Services Representative 2026',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/a6tfJxkg04/Police-Services-Representative-2026',
+    hot: false, note: '$17.88–$20.39/hr, entry level, open until filled', dateAdded: '2026-05-12', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate I-II',
     employer: 'Chatham County District Attorney\'s Office',
