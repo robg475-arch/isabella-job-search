@@ -564,7 +564,7 @@ const JOBS = [
     employer: 'Forsyth County Sheriff\'s Office',
     location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/4812051',
-    hot: false, note: null, dateAdded: '2026-05-11', expired: false },
+    hot: false, note: null, dateAdded: '2026-05-11', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Advocate Witness',
     employer: 'Henry County District Attorney\'s Office',
@@ -682,14 +682,15 @@ const JOBS = [
 ];
 
 const FILTERS = [
-  { id: 'all',       label: 'All Jobs' },
+  { id: 'active',    label: '✅ Active Only' },
+  { id: 'all',       label: 'All (incl. Closed)' },
   { id: 'new',       label: '🆕 New' },
   { id: 'forensics', label: '🔬 Forensics' },
   { id: 'court',     label: '⚖️ Court & Office' },
   { id: 'govt',      label: '🏛️ Gov & Services' },
 ];
 
-let activeFilter = 'all';
+let activeFilter = 'active';
 
 // ── DATE HELPERS ──
 function isNew(dateStr) {
@@ -710,13 +711,14 @@ function fmtDate(dateStr) {
 
 function buildFilterBar() {
   const latest = fmtDate(latestDate());
-  const newCount = JOBS.filter(j => isNew(j.dateAdded)).length;
+  const newCount = JOBS.filter(j => !j.expired && isNew(j.dateAdded)).length;
   document.getElementById('filterBar').innerHTML =
     FILTERS.map(f => {
       let count;
-      if (f.id === 'all')  count = JOBS.length;
+      if (f.id === 'active') count = JOBS.filter(j => !j.expired).length;
+      else if (f.id === 'all')  count = JOBS.length;
       else if (f.id === 'new') count = newCount;
-      else count = JOBS.filter(j => j.cat === f.id).length;
+      else count = JOBS.filter(j => !j.expired && j.cat === f.id).length;
       return `<button class="filter-chip${f.id === activeFilter ? ' active' : ''}"
         onclick="setFilter('${f.id}', this)">${f.label} <span class="n">${count}</span></button>`;
     }).join('') +
@@ -731,14 +733,15 @@ function setFilter(id, btn) {
 }
 
 function renderJobs() {
-  const filtered = activeFilter === 'all' ? JOBS
-    : activeFilter === 'new' ? JOBS.filter(j => isNew(j.dateAdded))
-    : JOBS.filter(j => j.cat === activeFilter);
+  const filtered = activeFilter === 'active' ? JOBS.filter(j => !j.expired)
+    : activeFilter === 'all' ? JOBS
+    : activeFilter === 'new' ? JOBS.filter(j => !j.expired && isNew(j.dateAdded))
+    : JOBS.filter(j => !j.expired && j.cat === activeFilter);
   const list = document.getElementById('jobList');
   if (!filtered.length) { list.innerHTML = '<p style="color:#a0aec0;padding:20px 0">No listings in this category.</p>'; return; }
 
   let html = '';
-  if (activeFilter === 'all') {
+  if (activeFilter === 'active' || activeFilter === 'all') {
     const groups = {};
     filtered.forEach(j => { if (!groups[j.cat]) groups[j.cat] = []; groups[j.cat].push(j); });
     for (const [, jobs] of Object.entries(groups)) {
