@@ -241,7 +241,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">18</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">23</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -541,6 +541,36 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate — Legal Services Dept.',
+    employer: 'Prosecuting Attorneys\' Council of Georgia',
+    location: 'Morrow, GA (Statewide)', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/prosecuting-attorneys-council-of-ga/',
+    hot: true, note: 'Deadline May 20, 2026', dateAdded: '2026-05-11', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Court Calendar Clerk',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5183154',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: false },
+  { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
+    title: 'Crime Scene Technician',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5085489',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: false },
+  { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
+    title: 'Digital Forensics Lab Technician',
+    employer: 'Forsyth County Sheriff\'s Office',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/4812051',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Advocate Witness',
+    employer: 'Henry County District Attorney\'s Office',
+    location: 'McDonough, Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/4992051',
+    hot: false, note: 'BA/BS required', dateAdded: '2026-05-11', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Criminal Case Coordinator',
     employer: 'Forsyth County Government',
