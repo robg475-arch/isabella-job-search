@@ -100,6 +100,12 @@
   .jtag-new { background: #dcfce7; color: #15803d; }
   .jcard-expired { opacity: 0.65; }
 
+  /* ── CLOSE CHECKBOX ── */
+  .jcard-close-wrap { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; cursor: pointer; }
+  .jcard-close-cb { width: 13px; height: 13px; cursor: pointer; accent-color: #dc2626; flex-shrink: 0; }
+  .jcard-close-label { font-size: 11px; color: #cbd5e0; cursor: pointer; user-select: none; white-space: nowrap; }
+  .jcard-close-wrap:hover .jcard-close-label { color: #dc2626; }
+
   /* TIPS */
   .tips-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 12px; }
   .tip-card { background: white; border-radius: 10px; padding: 16px; border: 1px solid #e2e8f0; }
@@ -815,6 +821,35 @@ const JOBS = [
     hot: false, note: '$38k–$95k range', dateAdded: '2026-04-28', expired: false },
 ];
 
+// ── MANUALLY-CLOSED JOBS (persisted in localStorage) ──
+const CLOSED_KEY = 'isabella-closed-jobs-v1';
+function getClosedUrls() {
+  try { return new Set(JSON.parse(localStorage.getItem(CLOSED_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+function saveClosedUrls(set) {
+  try { localStorage.setItem(CLOSED_KEY, JSON.stringify([...set])); } catch(e) {}
+}
+// Apply any previously-saved closures to the in-memory JOBS array on load
+getClosedUrls().forEach(url => {
+  const job = JOBS.find(j => j.url === url);
+  if (job) job.expired = true;
+});
+
+function markJobClosed(url, cb) {
+  if (!confirm('Move this job to "Closed"?\n\nIt will be removed from active listings. You can still see it under "All (incl. Closed)".')) {
+    if (cb) cb.checked = false; // user cancelled — uncheck
+    return;
+  }
+  const job = JOBS.find(j => j.url === url);
+  if (job) job.expired = true;
+  const set = getClosedUrls();
+  set.add(url);
+  saveClosedUrls(set);
+  buildFilterBar();
+  renderJobs();
+}
+
 const FILTERS = [
   { id: 'active',    label: '✅ Active Only' },
   { id: 'all',       label: 'All (incl. Closed)' },
@@ -912,6 +947,10 @@ function cardHTML(j) {
         <div class="jcard-actions">
           <a class="jcard-apply" href="${j.url}" target="_blank">View &amp; Apply →</a>
           ${!j.expired ? `<button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${j.location}')">✍️ Build Application</button>` : ''}
+          ${!j.expired ? `<label class="jcard-close-wrap" title="Mark this job as closed">
+            <input type="checkbox" class="jcard-close-cb" data-url="${j.url.replace(/"/g, '&quot;')}" onchange="markJobClosed(this.dataset.url, this)">
+            <span class="jcard-close-label">Mark closed</span>
+          </label>` : ''}
         </div>
       </div>
     </div>
