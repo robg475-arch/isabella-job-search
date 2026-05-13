@@ -241,7 +241,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">23</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">25</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -542,6 +542,18 @@ function showTab(id, btn) {
 
 const JOBS = [
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate I-II',
+    employer: 'Chatham County District Attorney\'s Office',
+    location: 'Savannah, Chatham County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/chathamcounty/jobs/newprint/4866534',
+    hot: false, note: 'Hire level based on exp.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Probation Officer I',
+    employer: 'Cobb County Government',
+    location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/5197455',
+    hot: false, note: 'BA in CJ/social work req.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate — Legal Services Dept.',
     employer: 'Prosecuting Attorneys\' Council of Georgia',
     location: 'Morrow, GA (Statewide)', source: 'PACGA',
@@ -672,7 +684,7 @@ const JOBS = [
     employer: 'Cobb County Government',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/3050251',
-    hot: false, note: 'Req. CJ degree', dateAdded: '2026-04-28', expired: false },
+    hot: false, note: 'Req. CJ degree', dateAdded: '2026-04-28', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'County Probation Officer Jobs — Georgia',
     employer: 'Multiple Counties',
