@@ -36,6 +36,8 @@
   .tab-btn:hover { color: var(--navy); }
   .tab-btn.active { color: var(--navy); border-bottom-color: var(--navy); }
   .tab-btn .new-badge { display: inline-block; background: #dc2626; color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+  .tab-btn.apply-tab { color: var(--purple); }
+  .tab-btn.apply-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
 
   /* CONTENT */
   .content { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
@@ -66,8 +68,11 @@
   .jtag-src { background: #f0fdf4; color: #166534; }
   .jtag-hot { background: #fff1f2; color: #be123c; }
   .jtag-note { background: #fefce8; color: #854d0e; }
-  .jcard-apply { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--navy); background: #eff6ff; border-radius: 6px; padding: 5px 12px; text-decoration: none; }
+  .jcard-actions { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .jcard-apply { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--navy); background: #eff6ff; border-radius: 6px; padding: 5px 12px; text-decoration: none; }
   .jcard-apply:hover { background: #dbeafe; }
+  .jcard-build { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--purple); background: #f5f3ff; border: 1px solid #ede9fe; border-radius: 6px; padding: 5px 12px; cursor: pointer; }
+  .jcard-build:hover { background: #ede9fe; }
 
   /* ── CATEGORY GROUPS (search links tabs) ── */
   .cat-group { margin-bottom: 28px; }
@@ -89,7 +94,51 @@
   .tag-pacga { background: #ede9fe; color: #5b21b6; }
   .tag-governmentjobs { background: #fce7f3; color: #9d174d; }
   .tag-csi { background: #f0fdf4; color: #15803d; }
+  .tag-sheriff { background: #fef3c7; color: #78350f; }
+  .tag-federal { background: #fee2e2; color: #991b1b; }
+  .tag-court { background: #e0f2fe; color: #075985; }
+  .tag-nonprofit { background: #fce7f3; color: #9d174d; }
   .arrow { color: #a0aec0; font-size: 14px; }
+  .jtag-date { background: #f1f5f9; color: #475569; }
+  .jtag-expired { background: #fff7ed; color: #c2410c; }
+  .jtag-new { background: #dcfce7; color: #15803d; }
+  .jcard-expired { opacity: 0.65; }
+
+  /* ── FAVORITE BUTTON ── */
+  .jcard-fav-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 0 2px; line-height: 1; transition: transform 0.15s; flex-shrink: 0; }
+  .jcard-fav-btn:hover { transform: scale(1.3); }
+  .fav-count-badge { display: inline-block; background: #f59e0b; color: #1a202c; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+  /* Favorites tab */
+  .fav-empty { text-align: center; padding: 60px 24px; color: #a0aec0; }
+  .fav-empty-icon { font-size: 52px; margin-bottom: 14px; }
+  .fav-empty p { font-size: 14px; line-height: 1.7; max-width: 300px; margin: 0 auto; }
+  .fav-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .fav-header h2 { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .fav-clear-btn { font-size: 11px; font-weight: 600; color: #dc2626; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .fav-clear-btn:hover { background: #fecdd3; }
+
+  /* ── APPLIED BUTTON & BADGE ── */
+  .jcard-applied-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; border-radius: 6px; padding: 5px 12px; cursor: pointer; border: 1.5px solid #bbf7d0; background: #f0fdf4; color: #15803d; transition: all 0.15s; font-family: inherit; }
+  .jcard-applied-btn:hover { background: #dcfce7; border-color: #86efac; }
+  .jcard-applied-btn.is-applied { background: #15803d; color: white; border-color: #15803d; }
+  .jcard-applied-btn.is-applied:hover { background: #166534; }
+  .jtag-applied { background: #dcfce7; color: #15803d; font-weight: 700; }
+  .applied-count-badge { display: inline-block; background: #15803d; color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+  /* Applied tab */
+  .applied-empty { text-align: center; padding: 60px 24px; color: #a0aec0; }
+  .applied-empty-icon { font-size: 52px; margin-bottom: 14px; }
+  .applied-empty p { font-size: 14px; line-height: 1.7; max-width: 300px; margin: 0 auto; }
+  .applied-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .applied-header h2 { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .applied-clear-btn { font-size: 11px; font-weight: 600; color: #dc2626; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .applied-clear-btn:hover { background: #fecdd3; }
+  .applied-date-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 11px; color: #15803d; font-weight: 600; }
+
+  /* ── CLOSE CHECKBOX ── */
+  .jcard-close-wrap { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; cursor: pointer; }
+  .jcard-close-cb { width: 13px; height: 13px; cursor: pointer; accent-color: #dc2626; flex-shrink: 0; }
+  .jcard-close-label { font-size: 11px; color: #cbd5e0; cursor: pointer; user-select: none; white-space: nowrap; }
+  .jcard-close-wrap:hover .jcard-close-label { color: #dc2626; }
 
   /* TIPS */
   .tips-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 12px; }
@@ -98,13 +147,115 @@
   .tip-title { font-size: 13px; font-weight: 700; color: #2d3748; margin-bottom: 4px; }
   .tip-text { font-size: 12px; color: #718096; line-height: 1.5; }
 
+  /* ── APPLY / APPLICATION BUILDER ── */
+  .apply-notice { display: flex; align-items: flex-start; gap: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 12.5px; color: #166534; line-height: 1.5; }
+  .apply-notice strong { display: block; margin-bottom: 2px; }
+
+  .apply-layout { display: grid; grid-template-columns: 360px 1fr; gap: 20px; align-items: start; }
+
+  .apply-panel { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 22px; }
+  .apply-panel-title { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .apply-panel-sub { font-size: 12px; color: #718096; margin-bottom: 18px; line-height: 1.5; }
+
+  .form-group { margin-bottom: 13px; }
+  .form-group label { display: block; font-size: 11px; font-weight: 700; color: #4a5568; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 8px 11px;
+    font-size: 13px; font-family: inherit; color: #2d3748; background: #f8fafc;
+    transition: border-color 0.15s; resize: vertical;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none; border-color: var(--purple); background: white;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .gen-btn {
+    width: 100%; background: var(--purple); color: white; border: none; border-radius: 8px;
+    padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px;
+    transition: background 0.15s, transform 0.1s; font-family: inherit;
+  }
+  .gen-btn:hover { background: #553098; transform: translateY(-1px); }
+  .gen-btn:active { transform: translateY(0); }
+
+  /* Output panel */
+  .output-placeholder { text-align: center; padding: 60px 24px; color: #a0aec0; }
+  .output-placeholder .ph-icon { font-size: 52px; margin-bottom: 14px; }
+  .output-placeholder p { font-size: 14px; line-height: 1.7; max-width: 300px; margin: 0 auto; }
+
+  .out-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .out-job-info { flex: 1; }
+  .out-job-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .out-job-employer { font-size: 12px; color: #718096; margin-top: 2px; }
+  .out-type-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .badge-forensics { background: #ede9fe; color: #5b21b6; }
+  .badge-court { background: #dbeafe; color: #1e40af; }
+  .badge-victim { background: #dcfce7; color: #15803d; }
+  .badge-probation { background: #fef3c7; color: #92400e; }
+  .badge-general { background: #f1f5f9; color: #475569; }
+
+  .out-tabs { display: flex; gap: 0; border-bottom: 2px solid #e2e8f0; margin-bottom: 16px; }
+  .out-tab { padding: 9px 16px; font-size: 13px; font-weight: 600; color: #718096; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; margin-bottom: -2px; font-family: inherit; }
+  .out-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+  .out-actions { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .out-action-btn {
+    display: inline-flex; align-items: center; gap: 5px; padding: 6px 13px;
+    border-radius: 7px; font-size: 12px; font-weight: 700; border: 1.5px solid #e2e8f0;
+    background: white; color: #4a5568; cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .out-action-btn:hover { border-color: var(--purple); color: var(--purple); }
+  .out-action-btn.copied { background: #dcfce7; border-color: #bbf7d0; color: #15803d; }
+
+  /* Document preview */
+  .doc-preview {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 30px 34px; font-size: 12.5px; line-height: 1.6; color: #1a202c;
+  }
+  .doc-name { font-size: 22px; font-weight: 800; color: #1a202c; text-align: center; letter-spacing: -0.3px; }
+  .doc-contact { text-align: center; font-size: 11.5px; color: #4a5568; margin-top: 4px; margin-bottom: 18px; }
+  .doc-contact a { color: #4a5568; text-decoration: none; }
+  .doc-divider { border: none; border-top: 1.5px solid #1a202c; margin: 6px 0 12px; }
+  .doc-section { margin-top: 14px; }
+  .doc-section-title {
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.9px;
+    color: #1a202c; border-bottom: 1px solid #cbd5e0; padding-bottom: 3px; margin-bottom: 8px;
+  }
+  .doc-summary { font-size: 12.5px; line-height: 1.65; color: #2d3748; }
+  .doc-entry { margin-bottom: 10px; }
+  .doc-entry-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .doc-entry-title { font-weight: 700; font-size: 13px; }
+  .doc-entry-date { font-size: 11.5px; color: #4a5568; white-space: nowrap; }
+  .doc-entry-org { font-size: 12px; color: #4a5568; margin-top: 1px; margin-bottom: 5px; }
+  .doc-bullets { margin: 0; padding-left: 18px; }
+  .doc-bullets li { margin-bottom: 3px; font-size: 12px; line-height: 1.55; }
+  .doc-skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 16px; }
+  .doc-skill-item { font-size: 12px; padding: 1px 0; }
+  .doc-skill-item::before { content: '• '; color: #4a5568; }
+  .doc-coursework { font-size: 12px; color: #2d3748; margin-top: 3px; }
+  .doc-honors { font-size: 12px; color: #2d3748; margin-top: 2px; }
+
+  /* Cover letter */
+  .letter-preview { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 30px 34px; font-size: 13px; line-height: 1.75; color: #1a202c; }
+  .letter-date { color: #4a5568; font-size: 12.5px; margin-bottom: 22px; }
+  .letter-addr { font-size: 12.5px; margin-bottom: 22px; line-height: 1.6; }
+  .letter-body p { margin-bottom: 16px; }
+  .letter-sign { margin-top: 28px; font-size: 12.5px; }
+  .letter-sign strong { display: block; font-size: 14px; font-weight: 700; margin-top: 28px; }
+
   /* FOOTER */
   .footer { text-align: center; padding: 24px; font-size: 12px; color: #a0aec0; border-top: 1px solid #e2e8f0; background: white; margin-top: 32px; }
 
+  @media (max-width: 760px) {
+    .apply-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .doc-skills-grid { grid-template-columns: 1fr; }
+    .doc-entry-header { flex-direction: column; gap: 1px; }
+  }
   @media (max-width: 600px) {
     .header h1 { font-size: 22px; }
     .job-grid { grid-template-columns: 1fr; }
     .tips-grid { grid-template-columns: 1fr; }
+    .doc-preview, .letter-preview { padding: 20px 16px; }
   }
 </style>
 </head>
@@ -130,11 +281,15 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">59</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">54</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
   <button class="tab-btn" onclick="showTab('tips', this)">💡 Tips for Isabella</button>
+  <button class="tab-btn" onclick="showTab('portals', this)">🗺️ Local Portals</button>
+  <button class="tab-btn" id="tab-btn-favorites" onclick="showTab('favorites', this); buildFavoritesTab();">⭐ Favorites<span id="fav-tab-badge" class="fav-count-badge" style="display:none">0</span></button>
+  <button class="tab-btn" id="tab-btn-applied" onclick="showTab('applied', this); buildAppliedTab();">✅ Applied<span id="applied-tab-badge" class="applied-count-badge" style="display:none">0</span></button>
+  <button class="tab-btn apply-tab" id="tab-btn-apply" onclick="showTab('apply', this)">✍️ Build Application</button>
 </div>
 
 <div class="content">
@@ -143,9 +298,7 @@
   <div class="section active" id="tab-listings">
     <div class="listings-toolbar" id="filterBar"></div>
     <div class="job-list" id="jobList"></div>
-    <p style="font-size:11px;color:#a0aec0;margin-top:18px;text-align:center;">
-      Listings last updated May 24, 2026 · Ask Dad to refresh with Claude for the latest results
-    </p>
+    <p style="font-size:11px;color:#a0aec0;margin-top:18px;text-align:center;" id="listings-footer"></p>
   </div>
 
   <!-- ══ FORENSICS SEARCH LINKS ══ -->
@@ -321,7 +474,7 @@
       <div class="tip-card">
         <div class="tip-icon">📄</div>
         <div class="tip-title">Tailor Your Resume</div>
-        <div class="tip-text">Highlight coursework in forensics, research methods, and any internships or ride-alongs. Government positions look for specific criminal justice terminology in applications.</div>
+        <div class="tip-text">Use the ✍️ Build Application tab to generate a tailored resume and cover letter for each job you apply to. Government positions look for specific criminal justice terminology.</div>
       </div>
       <div class="tip-card">
         <div class="tip-icon">🦅</div>
@@ -331,11 +484,374 @@
     </div>
   </div>
 
+  <!-- ══ LOCAL JOB PORTALS ══ -->
+  <div class="section" id="tab-portals">
+
+    <!-- County Government -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#0f3460"></div>
+        <div class="cat-title">County Government Portals</div>
+        <div class="cat-desc">Live openings only — much more reliable than Google searches</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://jobs.cherokeega.org/" target="_blank">
+          <div class="job-title">Cherokee County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">Cherokee County</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/cobbcounty" target="_blank">
+          <div class="job-title">Cobb County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/forsyth" target="_blank">
+          <div class="job-title">Forsyth County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/gwinnett" target="_blank">
+          <div class="job-title">Gwinnett County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/henryga" target="_blank">
+          <div class="job-title">Henry County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/fulton" target="_blank">
+          <div class="job-title">Fulton County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.bartowcountyga.gov/departments/human_resources/job_listings.php" target="_blank">
+          <div class="job-title">Bartow County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">Bartow County</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.pickenscountyga.gov/Jobs.aspx" target="_blank">
+          <div class="job-title">Pickens County — All Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">Pickens County</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- Sheriff's Offices -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#78350f"></div>
+        <div class="cat-title">Sheriff's Office Portals</div>
+        <div class="cat-desc">Civilian &amp; non-sworn roles — crime scene, records, victim services</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://sheriff.cherokeecountyga.gov/join/" target="_blank">
+          <div class="job-title">Cherokee County Sheriff's Office — Join the Team</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Cherokee SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.cobbsheriff.org/careers/available-positions" target="_blank">
+          <div class="job-title">Cobb County Sheriff's Office — Available Positions</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Cobb SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.forsythsheriffcareers.com/careers" target="_blank">
+          <div class="job-title">Forsyth County Sheriff's Office — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Forsyth SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://gogcso.com/" target="_blank">
+          <div class="job-title">Gwinnett County Sheriff's Office — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Gwinnett SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://henrycountysheriffga.gov/careers/" target="_blank">
+          <div class="job-title">Henry County Sheriff's Office — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Henry SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://webmaster2166.wixsite.com/bartowso/employment" target="_blank">
+          <div class="job-title">Bartow County Sheriff's Office — Employment</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Bartow SO</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://pickenssheriffcareers.com/" target="_blank">
+          <div class="job-title">Pickens County Sheriff's Office — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-sheriff">Pickens SO</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- City Government -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#2b6cb0"></div>
+        <div class="cat-title">City Government Portals</div>
+        <div class="cat-desc">Direct HR portals — jobs are often posted here before job boards</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://www.woodstockga.gov/your_government/departments/human_resources/index.php" target="_blank">
+          <div class="job-title">City of Woodstock — Human Resources</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Woodstock</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.cantonga.gov/government/careers" target="_blank">
+          <div class="job-title">City of Canton — Career Center</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Canton</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://cityofmariettaga.applytojob.com/apply" target="_blank">
+          <div class="job-title">City of Marietta — Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Marietta</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://kennesaw-ga.zohorecruit.com/jobs/Careers" target="_blank">
+          <div class="job-title">City of Kennesaw — Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Kennesaw</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://acworth.applicantstack.com/x/openings" target="_blank">
+          <div class="job-title">City of Acworth — Open Positions</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Acworth</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.smyrnaga.gov/services/apply-for/employment" target="_blank">
+          <div class="job-title">City of Smyrna — Employment</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Smyrna</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.cartersvillega.gov/170/Human-Resources" target="_blank">
+          <div class="job-title">City of Cartersville — Human Resources</div>
+          <div class="job-footer"><span class="src-tag tag-gov">City of Cartersville</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- Georgia State Agencies -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#276749"></div>
+        <div class="cat-title">Georgia State Agencies</div>
+        <div class="cat-desc">Statewide — criminal justice, forensics, victim services &amp; corrections</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://careers.georgia.gov" target="_blank">
+          <div class="job-title">Team Georgia Careers — All State Jobs</div>
+          <div class="job-footer"><span class="src-tag tag-gov">State of Georgia</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/gbi" target="_blank">
+          <div class="job-title">Georgia Bureau of Investigation (GBI) — All Careers</div>
+          <div class="job-footer"><span class="src-tag tag-gbi">GBI (State)</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://dofs-gbi.georgia.gov/career-opportunities" target="_blank">
+          <div class="job-title">GBI Division of Forensic Sciences — Career Opportunities</div>
+          <div class="job-footer"><span class="src-tag tag-gbi">GBI DOFS</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://dcs.georgia.gov/dcs-careers/opportunities" target="_blank">
+          <div class="job-title">GA Dept. of Community Supervision — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-gov">GA DCS</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.governmentjobs.com/careers/dhsgeorgia" target="_blank">
+          <div class="job-title">GA Dept. of Human Services — All Careers</div>
+          <div class="job-footer"><span class="src-tag tag-governmentjobs">GovernmentJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://djj.georgia.gov/current-openings" target="_blank">
+          <div class="job-title">GA Dept. of Juvenile Justice — Current Openings</div>
+          <div class="job-footer"><span class="src-tag tag-gov">GA DJJ</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://jobs.gdc.ga.gov/" target="_blank">
+          <div class="job-title">GA Dept. of Corrections — Job Openings</div>
+          <div class="job-footer"><span class="src-tag tag-gov">GA DOC</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://pacga.org/employment-opportunities/" target="_blank">
+          <div class="job-title">PACGA — Prosecuting Attorneys' Council of Georgia</div>
+          <div class="job-footer"><span class="src-tag tag-pacga">PACGA</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- Courts -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#075985"></div>
+        <div class="cat-title">Court System Portals</div>
+        <div class="cat-desc">State &amp; federal courts — clerk, coordinator, and court services roles</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://georgiacourts.gov/career-opportunities/" target="_blank">
+          <div class="job-title">Georgia Courts (AOC/Judicial Council) — Career Opportunities</div>
+          <div class="job-footer"><span class="src-tag tag-court">GA Courts</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.gasupreme.us/employment-opportunities/" target="_blank">
+          <div class="job-title">Supreme Court of Georgia — Employment Opportunities</div>
+          <div class="job-footer"><span class="src-tag tag-court">GA Supreme Court</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.fultonclerk.org/446/Careers" target="_blank">
+          <div class="job-title">Fulton County Clerk of Superior &amp; Magistrate Courts — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-court">Fulton Clerk</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.gand.uscourts.gov/employment" target="_blank">
+          <div class="job-title">U.S. District Court — Northern District of Georgia (Atlanta)</div>
+          <div class="job-footer"><span class="src-tag tag-federal">Federal Court</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- Federal Agencies -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#991b1b"></div>
+        <div class="cat-title">Federal Agencies</div>
+        <div class="cat-desc">FBI, US Marshals, DEA, ATF &amp; more — Georgia &amp; national postings</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://www.usajobs.gov/Search/Results?k=criminal+justice&l=Georgia" target="_blank">
+          <div class="job-title">USAJobs — All Federal Criminal Justice Jobs in Georgia</div>
+          <div class="job-footer"><span class="src-tag tag-federal">USAJobs</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://fbijobs.gov/" target="_blank">
+          <div class="job-title">FBI Careers — Intelligence Analysts &amp; Professional Staff</div>
+          <div class="job-footer"><span class="src-tag tag-federal">FBI</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://fbijobs.gov/students-and-graduates" target="_blank">
+          <div class="job-title">FBI — Students &amp; Recent Graduates (Collegiate Hiring Initiative)</div>
+          <div class="job-footer"><span class="src-tag tag-federal">FBI</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.usmarshals.gov/careers" target="_blank">
+          <div class="job-title">U.S. Marshals Service — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-federal">US Marshals</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.fletc.gov/careers" target="_blank">
+          <div class="job-title">Federal Law Enforcement Training Centers (FLETC) — Careers</div>
+          <div class="job-footer"><span class="src-tag tag-federal">FLETC</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- Nonprofits & Victim Services -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#9d174d"></div>
+        <div class="cat-title">Nonprofits &amp; Victim Services Organizations</div>
+        <div class="cat-desc">Advocacy, crisis intervention &amp; survivor services — CJ degree welcomed</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://livesaferesources.org/about-livesafe-resources/employment-opportunities-2/" target="_blank">
+          <div class="job-title">LiveSafe Resources — Employment Opportunities (Cobb County)</div>
+          <div class="job-footer"><span class="src-tag tag-nonprofit">Nonprofit</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://gcadv.org/get-involved/work-with-us/" target="_blank">
+          <div class="job-title">GA Coalition Against Domestic Violence — Work With Us</div>
+          <div class="job-footer"><span class="src-tag tag-nonprofit">Nonprofit</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.indeed.com/q-victim-advocate-l-georgia-jobs.html" target="_blank">
+          <div class="job-title">Victim Advocate Jobs — Georgia (Indeed)</div>
+          <div class="job-footer"><span class="src-tag tag-indeed">Indeed</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- University Career Platforms -->
+    <div class="cat-group">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:#6366f1"></div>
+        <div class="cat-title">University &amp; New-Grad Career Platforms</div>
+        <div class="cat-desc">Log in with your UGA credentials — criminal justice roles posted directly for new grads</div>
+      </div>
+      <div class="job-grid">
+        <div class="job-card"><a href="https://uga.joinhandshake.com/" target="_blank">
+          <div class="job-title">UGA Handshake — Criminal Justice Jobs (log in with MyID)</div>
+          <div class="job-footer"><span class="src-tag" style="background:#6366f1;color:#fff">Handshake</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.linkedin.com/jobs/search/?keywords=criminal+justice&location=Georgia%2C+United+States&f_E=1%2C2&sortBy=DD" target="_blank">
+          <div class="job-title">LinkedIn Jobs — Entry-Level Criminal Justice, Georgia</div>
+          <div class="job-footer"><span class="src-tag" style="background:#0a66c2;color:#fff">LinkedIn</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.idealist.org/en/jobs?q=criminal+justice&location=Georgia&radius=50" target="_blank">
+          <div class="job-title">Idealist.org — Nonprofit &amp; Gov't CJ Jobs in Georgia</div>
+          <div class="job-footer"><span class="src-tag tag-nonprofit">Idealist</span><span class="arrow">→</span></div>
+        </a></div>
+        <div class="job-card"><a href="https://www.usajobs.gov/Search/Results?k=criminal+justice&l=Georgia&hp=student" target="_blank">
+          <div class="job-title">USAJobs — Recent Grad &amp; Student Programs, Georgia</div>
+          <div class="job-footer"><span class="src-tag tag-federal">USAJobs</span><span class="arrow">→</span></div>
+        </a></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ FAVORITES ══ -->
+  <div class="section" id="tab-favorites">
+    <div id="favList"></div>
+  </div>
+
+  <!-- ══ APPLIED ══ -->
+  <div class="section" id="tab-applied">
+    <div id="appliedList"></div>
+  </div>
+
+  <!-- ══ APPLY / APPLICATION BUILDER ══ -->
+  <div class="section" id="tab-apply">
+
+    <div class="apply-notice">
+      <span style="font-size:18px;flex-shrink:0;">✅</span>
+      <div>
+        <strong>100% Accurate — Nothing Fabricated</strong>
+        All application materials are built exclusively from Isabella's verified experience, education, and skills. The tool tailors the emphasis and language to match the job type — it never invents experience she doesn't have.
+      </div>
+    </div>
+
+    <div class="apply-layout">
+
+      <!-- LEFT: INPUT FORM -->
+      <div class="apply-panel">
+        <div class="apply-panel-title">Job Details</div>
+        <div class="apply-panel-sub">Fill in the job info below. The more detail you paste into the job description, the better the tailoring.</div>
+
+        <div class="form-group">
+          <label>Job Title *</label>
+          <input type="text" id="inp-title" placeholder="e.g. Crime Scene Technician I">
+        </div>
+
+        <div class="form-group">
+          <label>Employer / Agency *</label>
+          <input type="text" id="inp-employer" placeholder="e.g. Henry County Sheriff's Office">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>City, State</label>
+            <input type="text" id="inp-location" placeholder="e.g. Henry County, GA">
+          </div>
+          <div class="form-group">
+            <label>Hiring Manager (if known)</label>
+            <input type="text" id="inp-mgr" placeholder="e.g. Captain Smith">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Focus Area <span style="font-weight:400;color:#718096;">(auto-detected from description)</span></label>
+          <select id="inp-focus">
+            <option value="auto">Auto-detect from job description</option>
+            <option value="forensics">🔬 Forensics / Crime Scene</option>
+            <option value="court">⚖️ Court / Records / Legal</option>
+            <option value="victim">🤝 Victim Services / Advocacy</option>
+            <option value="probation">🏛️ Probation / Law Enforcement</option>
+            <option value="general">📋 General Criminal Justice</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Job Description / Requirements</label>
+          <textarea id="inp-jd" rows="9" placeholder="Paste the full job posting here. The tool will scan it to tailor the resume and cover letter to match what they're looking for."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Anything specific to emphasize? <span style="font-weight:400;color:#718096;">(optional)</span></label>
+          <textarea id="inp-notes" rows="2" placeholder="e.g. 'emphasize database experience' or 'this is a victim advocate role at a DA's office'"></textarea>
+        </div>
+
+        <button class="gen-btn" onclick="generateApplication()">✍️ Generate Resume &amp; Cover Letter</button>
+      </div>
+
+      <!-- RIGHT: OUTPUT PANEL -->
+      <div class="apply-panel" id="applyOutput">
+        <div class="output-placeholder">
+          <div class="ph-icon">📄</div>
+          <p>Enter the job details on the left and click <strong>Generate</strong> to create a tailored resume and cover letter based on Isabella's real experience.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- end content -->
 
 <div class="footer">
   Built for Isabella · UGA Criminal Justice Class of 2026 · Woodstock, GA area<br>
-  <span style="color:#cbd5e0;">Listings updated April 28, 2026 — Ask Dad to refresh with Claude for the latest!</span>
+  <span style="color:#cbd5e0;" id="footer-date"></span>
+  <script>document.getElementById('footer-date').textContent = 'Listings updated ' + fmtDate(latestDate()) + ' — Ask Dad to refresh with Claude for the latest!';</script>
 </div>
 
 <script>
@@ -348,231 +864,206 @@ function showTab(id, btn) {
 }
 
 // ── INDIVIDUAL LISTINGS DATA ──
+// ── HOW TO UPDATE LISTINGS ──
+// When adding new jobs: append new entries to the TOP of the JOBS array with
+// dateAdded set to today's date (YYYY-MM-DD). Never delete old entries —
+// instead set expired: true on any that have closed. The dashboard will
+// show "⚠️ Closed" on expired listings and keep them visible for reference.
+
 const JOBS = [
 
-
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Services Advocate',
+    employer: 'Henry County District Attorney\'s Office',
+    location: 'Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/5344960',
+    hot: false, note: 'BA in social work/CJ req.; DA\'s Office', dateAdded: '2026-05-24', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Probation Officer I',
+    employer: 'Henry County Government',
+    location: 'Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/5012057',
+    hot: false, note: 'BA in CJ/behavioral science req.; entry level', dateAdded: '2026-05-24', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Senior Municipal Court Clerk',
+    employer: 'City of Acworth',
+    location: 'Acworth, Cobb County, GA', source: 'City of Acworth',
+    url: 'https://acworth.applicantstack.com/x/detail/a2kjnllmzdiw',
+    hot: false, note: '$23.34/hr, open until filled', dateAdded: '2026-05-18', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Public Safety Ambassador',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/mPecsFGATS/Public-Safety-Ambassador',
+    hot: false, note: '$19.82–$22.61/hr, civilian (non-sworn), entry level, open until filled', dateAdded: '2026-05-18', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim/Witness Advocate',
+    employer: 'Fulton County District Attorney\'s Office',
+    location: 'Atlanta, Fulton County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/fulton/jobs/newprint/5051440',
+    hot: false, note: 'BA in CJ or related req.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Deputy Court Clerk 2026',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/gGuKkSbT2S/Deputy-Court-Clerk-2026',
+    hot: false, note: '$17.88–$20.38/hr, open until filled', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Police Services Representative 2026',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/a6tfJxkg04/Police-Services-Representative-2026',
+    hot: false, note: '$17.88–$20.39/hr, entry level, open until filled', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate I-II',
+    employer: 'Chatham County District Attorney\'s Office',
+    location: 'Savannah, Chatham County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/chathamcounty/jobs/newprint/4866534',
+    hot: false, note: 'Hire level based on exp.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Probation Officer I',
+    employer: 'Cobb County Government',
+    location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/5197455',
+    hot: false, note: 'BA in CJ/social work req.', dateAdded: '2026-05-12', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate — Legal Services Dept.',
+    employer: 'Prosecuting Attorneys\' Council of Georgia',
+    location: 'Morrow, GA (Statewide)', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/prosecuting-attorneys-council-of-ga/',
+    hot: true, note: 'Deadline May 20, 2026', dateAdded: '2026-05-11', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Court Calendar Clerk',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5183154',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: false },
+  { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
+    title: 'Crime Scene Technician',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5085489',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: true },
+  { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
+    title: 'Digital Forensics Lab Technician',
+    employer: 'Forsyth County Sheriff\'s Office',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/4812051',
+    hot: false, note: null, dateAdded: '2026-05-11', expired: true },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Advocate Witness',
+    employer: 'Henry County District Attorney\'s Office',
+    location: 'McDonough, Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/4992051',
+    hot: false, note: 'BA/BS required', dateAdded: '2026-05-11', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Criminal Case Coordinator',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/newprint/5128574',
+    hot: false, note: '$47k–$62k salary', dateAdded: '2026-04-30', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Parental Accountability Coordinator 2',
+    employer: 'Georgia Department of Human Services',
+    location: 'Statewide, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/dhsgeorgia/jobs/newprint/5247949',
+    hot: false, note: 'Req. CJ degree + 2 yrs judicial exp.', dateAdded: '2026-04-30', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Community Supervision Officer I',
+    employer: 'Georgia Department of Community Supervision',
+    location: 'Statewide, GA (incl. Marietta/Canton)', source: 'GA DCS',
+    url: 'https://dcs.georgia.gov/dcs-careers/opportunities',
+    hot: false, note: 'Multiple NW Georgia offices', dateAdded: '2026-04-30', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Scene Technician I',
     employer: 'Henry County Sheriff\'s Office',
     location: 'Henry County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/4458358',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: true },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Scene Technician',
     employer: 'City of East Point',
     location: 'East Point, GA (near Atlanta)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/eastpointga/jobs/4891549/crime-scene-technician',
-    hot: true, note: 'Deadline May 15, 2026' },
+    hot: true, note: 'Deadline May 15, 2026', dateAdded: '2026-04-28', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Crime Lab Scientist',
     employer: 'Georgia Bureau of Investigation (GBI)',
     location: 'Statewide, GA', source: 'GBI',
     url: 'https://gbi.georgia.gov/crime-lab-scientist',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'forensics', icon: '🔬', catLabel: 'Forensics & Crime Scene',
     title: 'Forensic Sciences Career Opportunities',
     employer: 'GBI Division of Forensic Sciences',
     location: 'Statewide, GA', source: 'GBI',
     url: 'https://dofs-gbi.georgia.gov/career-opportunities',
-    hot: false, note: 'Multiple roles posted' },
+    hot: false, note: 'Multiple roles posted', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Court Associate I — Clerk of Recorder\'s Court',
     employer: 'Gwinnett County Government',
     location: 'Gwinnett County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/gwinnett/jobs/newprint/5206223',
-    hot: false, note: 'Posted Feb 2026' },
+    hot: false, note: 'Posted Feb 2026', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Criminal Justice Specialist — Sheriff\'s Office',
     employer: 'Cobb County Government',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/4785617/criminal-justice-specialist-sheriffs-office',
-    hot: true, note: null },
+    hot: true, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Open Court & Office Positions',
     employer: 'Cherokee County Government (Official Portal)',
     location: 'Cherokee County, GA', source: 'Cherokee County Direct',
     url: 'https://jobs.cherokeega.org/',
-    hot: false, note: '105 positions listed' },
+    hot: false, note: '105 positions listed', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Legal Assistant Jobs — Kennesaw, GA',
     employer: 'Multiple Employers',
     location: 'Kennesaw, GA', source: 'Indeed',
     url: 'https://www.indeed.com/q-legal-assistant-l-kennesaw,-ga-jobs.html',
-    hot: false, note: '203 entry-level listings' },
+    hot: false, note: '203 entry-level listings', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'Legal Assistant Jobs — Marietta, GA',
     employer: 'Multiple Employers',
     location: 'Marietta, GA', source: 'CareerBuilder',
     url: 'https://www.careerbuilder.com/jobs-legal-assistant-in-marietta,ga',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate',
     employer: 'Cobb County Solicitor General\'s Office',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/4279140',
-    hot: true, note: 'Opened Jan 27, 2026' },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Part-Time Victim Advocate Counselor',
     employer: 'Cobb County Solicitor\'s Office',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/4547196',
-    hot: false, note: 'Part-time / flexible' },
+    hot: false, note: 'Part-time / flexible', dateAdded: '2026-04-28', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate I',
     employer: 'Chatham County District Attorney',
     location: 'Chatham County, GA', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/chathamcounty/jobs/newprint/4552606',
-    hot: false, note: null },
+    hot: false, note: null, dateAdded: '2026-04-28', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate — Cherokee, Cobb & Clayton',
     employer: 'Prosecuting Attorneys\' Council of Georgia (PACGA)',
     location: 'Cherokee / Cobb / Clayton County', source: 'PACGA',
     url: 'https://pacga.org/employment-opportunities/position-title/victim-witness-advocate/',
-    hot: false, note: 'Multi-county positions' },
+    hot: false, note: 'Multi-county positions', dateAdded: '2026-04-28', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Probation Officer',
     employer: 'Cobb County Government',
     location: 'Marietta, GA (Cobb County)', source: 'GovernmentJobs',
     url: 'https://www.governmentjobs.com/careers/cobbcounty/jobs/newprint/3050251',
-    hot: false, note: 'Req. CJ degree' },
+    hot: false, note: 'Req. CJ degree', dateAdded: '2026-04-28', expired: true },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'County Probation Officer Jobs — Georgia',
     employer: 'Multiple Counties',
     location: 'North Georgia / Cherokee area', source: 'ZipRecruiter',
     url: 'https://www.ziprecruiter.com/Jobs/County-Probation-Officer/--in-Georgia',
-    hot: false, note: '$38k–$95k range' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'US Gov Early Careers',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Atlanta, GA + 8',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Veritext Legal Solutions',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11044954?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Remote or Atlanta, GA + 88',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'MarketSphere Consulting',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11071762?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Atlanta, GA',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Nightlight Christian Adoptions',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11059862?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Athens, GA',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Southern Company',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11062836?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'United States Secret Service',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/10653943?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Atlanta, GA + 9',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
-    title: 'U.S. Probation Office - Middle District of Georgia',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11007600?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Columbus, GA',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Law Offices of Cheri E. Michaelis',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11035686?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Remote',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'George & Wallach, LLLP',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/10902406?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Atlanta, GA + 1',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Amazon',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/10179472?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Porters Creek Farm',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/10846805?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Athens, GA + 1',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11065143?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Ballotpedia',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/11052673?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
-  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
-    title: 'Hodgins & Kiber',
-    employer: 'Not specified',
-    location: 'Georgia', source: 'UGA Handshake',
-    url: 'https://uga.joinhandshake.com/job-search/10997388?page=1&per_page=25',
-    hot: false, note: 'From Handshake' },
+    hot: false, note: '$38k–$95k range', dateAdded: '2026-04-28', expired: false },
   { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
     title: 'US Gov Early Careers',
     employer: 'Not specified',
@@ -707,23 +1198,239 @@ const JOBS = [
     hot: false, note: 'From Handshake' }
 ];
 
+// ── FAVORITES (persisted in localStorage) ──
+const FAVES_KEY = 'isabella-fav-jobs-v1';
+function getFavUrls() {
+  try { return new Set(JSON.parse(localStorage.getItem(FAVES_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+function saveFavUrls(set) {
+  try { localStorage.setItem(FAVES_KEY, JSON.stringify([...set])); } catch(e) {}
+}
+function toggleFav(url, btn) {
+  const favs = getFavUrls();
+  if (favs.has(url)) { favs.delete(url); } else { favs.add(url); }
+  saveFavUrls(favs);
+  // Update the button in place
+  const isFav = favs.has(url);
+  btn.textContent = isFav ? '⭐' : '☆';
+  btn.title = isFav ? 'Remove from favorites' : 'Add to favorites';
+  updateFavBadge();
+  // If favorites tab is currently open, re-render it
+  if (document.getElementById('tab-favorites').classList.contains('active')) buildFavoritesTab();
+}
+function updateFavBadge() {
+  const count = getFavUrls().size;
+  const badge = document.getElementById('fav-tab-badge');
+  if (!badge) return;
+  if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
+}
+function buildFavoritesTab() {
+  const favs = getFavUrls();
+  const el = document.getElementById('favList');
+  if (favs.size === 0) {
+    el.innerHTML = `<div class="fav-empty"><div class="fav-empty-icon">☆</div><p>No favorites yet — hit the ☆ on any listing to save it here.</p></div>`;
+    return;
+  }
+  const favJobs = JOBS.filter(j => favs.has(j.url));
+  el.innerHTML = `
+    <div class="fav-header">
+      <h2>⭐ Saved Favorites <span style="font-weight:400;color:#718096;font-size:13px">(${favJobs.length} job${favJobs.length !== 1 ? 's' : ''})</span></h2>
+      <button class="fav-clear-btn" onclick="clearAllFavs()">Clear all</button>
+    </div>
+    <div class="job-list">${favJobs.map(cardHTML).join('')}</div>`;
+}
+function clearAllFavs() {
+  if (!confirm('Remove all favorites?')) return;
+  saveFavUrls(new Set());
+  updateFavBadge();
+  buildFavoritesTab();
+}
+
+// ── APPLIED JOBS (persisted in localStorage as { url: 'YYYY-MM-DD' }) ──
+const APPLIED_KEY = 'isabella-applied-jobs-v1';
+function getAppliedMap() {
+  try { return JSON.parse(localStorage.getItem(APPLIED_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveAppliedMap(map) {
+  try { localStorage.setItem(APPLIED_KEY, JSON.stringify(map)); } catch(e) {}
+}
+function toggleApplied(url, btn) {
+  const map = getAppliedMap();
+  const wasApplied = url in map;
+  if (wasApplied) {
+    if (!confirm('Remove this job from your Applied list?')) return;
+    delete map[url];
+  } else {
+    const today = new Date().toISOString().slice(0, 10);
+    map[url] = today;
+  }
+  saveAppliedMap(map);
+  const isNowApplied = url in map;
+  btn.textContent = isNowApplied ? '✅ Applied' : '➕ Mark Applied';
+  btn.className = 'jcard-applied-btn' + (isNowApplied ? ' is-applied' : '');
+  btn.title = isNowApplied ? 'Click to remove from Applied' : 'Mark as applied';
+  // Update the applied date tag on the card if present
+  const card = btn.closest('.jcard');
+  if (card) {
+    const existing = card.querySelector('.jtag-applied');
+    if (isNowApplied) {
+      if (!existing) {
+        const tags = card.querySelector('.jcard-tags');
+        if (tags) {
+          const span = document.createElement('span');
+          span.className = 'jtag jtag-applied';
+          span.textContent = '✅ Applied ' + fmtDate(map[url]);
+          tags.appendChild(span);
+        }
+      }
+    } else {
+      if (existing) existing.remove();
+    }
+  }
+  updateAppliedBadge();
+  if (document.getElementById('tab-applied').classList.contains('active')) buildAppliedTab();
+}
+function updateAppliedBadge() {
+  const count = Object.keys(getAppliedMap()).length;
+  const badge = document.getElementById('applied-tab-badge');
+  if (!badge) return;
+  if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
+}
+function buildAppliedTab() {
+  const map = getAppliedMap();
+  const el = document.getElementById('appliedList');
+  const urls = Object.keys(map);
+  if (urls.length === 0) {
+    el.innerHTML = `<div class="applied-empty"><div class="applied-empty-icon">📋</div><p>Nothing here yet — hit <strong>➕ Mark Applied</strong> on any listing after you submit an application.</p></div>`;
+    return;
+  }
+  // Sort by date applied, newest first
+  const appliedJobs = urls
+    .map(url => ({ job: JOBS.find(j => j.url === url), url, dateApplied: map[url] }))
+    .filter(e => e.job)
+    .sort((a, b) => b.dateApplied.localeCompare(a.dateApplied));
+  const cards = appliedJobs.map(({ job, dateApplied }) => {
+    const titleEsc = job.title.replace(/'/g, "\\'");
+    const employerEsc = job.employer.replace(/'/g, "\\'");
+    const urlAttr = job.url.replace(/"/g, '&quot;');
+    const isFav = getFavUrls().has(job.url);
+    return `<div class="jcard">
+      <div class="jcard-top">
+        <span class="jcard-icon">${job.icon}</span>
+        <div class="jcard-body">
+          <div style="display:flex;align-items:flex-start;gap:6px;">
+            <div style="flex:1;min-width:0;">
+              <div class="jcard-title">${job.title}</div>
+              <div class="jcard-employer">${job.employer}</div>
+            </div>
+            <button class="jcard-fav-btn" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+              onclick="toggleFav('${urlAttr.replace(/'/g,"\\'")}', this)">${isFav ? '⭐' : '☆'}</button>
+          </div>
+          <div class="applied-date-row">✅ Applied on ${fmtDate(dateApplied)}</div>
+          <div class="jcard-tags" style="margin-top:5px;">
+            <span class="jtag jtag-loc">📍 ${job.location}</span>
+            <span class="jtag jtag-src">${job.source}</span>
+            ${job.note ? `<span class="jtag jtag-note">📌 ${job.note}</span>` : ''}
+          </div>
+          <div class="jcard-actions">
+            <a class="jcard-apply" href="${job.url}" target="_blank">View Posting →</a>
+            <button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${job.location}')">✍️ Build Application</button>
+            <button class="jcard-applied-btn is-applied" onclick="toggleApplied('${urlAttr.replace(/'/g,"\\'")}', this)" title="Click to remove from Applied">✅ Applied</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="applied-header">
+      <h2>✅ Applications Tracker <span style="font-weight:400;color:#718096;font-size:13px">(${appliedJobs.length} submitted)</span></h2>
+      <button class="applied-clear-btn" onclick="clearAllApplied()">Clear all</button>
+    </div>
+    <div class="job-list">${cards}</div>`;
+}
+function clearAllApplied() {
+  if (!confirm('Clear your entire Applied list?')) return;
+  saveAppliedMap({});
+  updateAppliedBadge();
+  buildAppliedTab();
+  renderJobs(); // refresh main list to un-highlight applied buttons
+}
+
+// ── MANUALLY-CLOSED JOBS (persisted in localStorage) ──
+const CLOSED_KEY = 'isabella-closed-jobs-v1';
+function getClosedUrls() {
+  try { return new Set(JSON.parse(localStorage.getItem(CLOSED_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+function saveClosedUrls(set) {
+  try { localStorage.setItem(CLOSED_KEY, JSON.stringify([...set])); } catch(e) {}
+}
+// Apply any previously-saved closures to the in-memory JOBS array on load
+getClosedUrls().forEach(url => {
+  const job = JOBS.find(j => j.url === url);
+  if (job) job.expired = true;
+});
+
+function markJobClosed(url, cb) {
+  if (!confirm('Move this job to "Closed"?\n\nIt will be removed from active listings. You can still see it under "All (incl. Closed)".')) {
+    if (cb) cb.checked = false; // user cancelled — uncheck
+    return;
+  }
+  const job = JOBS.find(j => j.url === url);
+  if (job) job.expired = true;
+  const set = getClosedUrls();
+  set.add(url);
+  saveClosedUrls(set);
+  buildFilterBar();
+  renderJobs();
+}
+
 const FILTERS = [
-  { id: 'all',       label: 'All Jobs' },
+  { id: 'active',    label: '✅ Active Only' },
+  { id: 'all',       label: 'All (incl. Closed)' },
+  { id: 'new',       label: '🆕 New' },
   { id: 'forensics', label: '🔬 Forensics' },
   { id: 'court',     label: '⚖️ Court & Office' },
   { id: 'govt',      label: '🏛️ Gov & Services' },
 ];
 
-let activeFilter = 'all';
+let activeFilter = 'active';
+
+// ── DATE HELPERS ──
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const added = new Date(dateStr + 'T12:00:00');
+  const daysDiff = (new Date() - added) / (1000 * 60 * 60 * 24);
+  return daysDiff <= 14;
+}
+
+function latestDate() {
+  return JOBS.map(j => j.dateAdded).filter(Boolean).sort().reverse()[0] || null;
+}
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '';
+  return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
 function buildFilterBar() {
+  const latest = fmtDate(latestDate());
+  const newCount = JOBS.filter(j => !j.expired && isNew(j.dateAdded)).length;
   document.getElementById('filterBar').innerHTML =
     FILTERS.map(f => {
-      const count = f.id === 'all' ? JOBS.length : JOBS.filter(j => j.cat === f.id).length;
+      let count;
+      if (f.id === 'active') count = JOBS.filter(j => !j.expired).length;
+      else if (f.id === 'all')  count = JOBS.length;
+      else if (f.id === 'new') count = newCount;
+      else count = JOBS.filter(j => !j.expired && j.cat === f.id).length;
       return `<button class="filter-chip${f.id === activeFilter ? ' active' : ''}"
         onclick="setFilter('${f.id}', this)">${f.label} <span class="n">${count}</span></button>`;
     }).join('') +
-    `<span class="listings-meta">Updated May 24, 2026</span>`;
+    `<span class="listings-meta">Updated ${latest}</span>`;
 }
 
 function setFilter(id, btn) {
@@ -734,12 +1441,15 @@ function setFilter(id, btn) {
 }
 
 function renderJobs() {
-  const filtered = activeFilter === 'all' ? JOBS : JOBS.filter(j => j.cat === activeFilter);
+  const filtered = activeFilter === 'active' ? JOBS.filter(j => !j.expired)
+    : activeFilter === 'all' ? JOBS
+    : activeFilter === 'new' ? JOBS.filter(j => !j.expired && isNew(j.dateAdded))
+    : JOBS.filter(j => !j.expired && j.cat === activeFilter);
   const list = document.getElementById('jobList');
   if (!filtered.length) { list.innerHTML = '<p style="color:#a0aec0;padding:20px 0">No listings in this category.</p>'; return; }
 
   let html = '';
-  if (activeFilter === 'all') {
+  if (activeFilter === 'active' || activeFilter === 'all') {
     const groups = {};
     filtered.forEach(j => { if (!groups[j.cat]) groups[j.cat] = []; groups[j.cat].push(j); });
     for (const [, jobs] of Object.entries(groups)) {
@@ -753,19 +1463,49 @@ function renderJobs() {
 }
 
 function cardHTML(j) {
-  return `<div class="jcard">
+  const titleEsc = j.title.replace(/'/g, "\\'");
+  const employerEsc = j.employer.replace(/'/g, "\\'");
+  const urlAttr = j.url.replace(/"/g, '&quot;');
+  const isFav = getFavUrls().has(j.url);
+  const appliedMap = getAppliedMap();
+  const isApplied = j.url in appliedMap;
+  const newBadge  = (!j.expired && isNew(j.dateAdded)) ? '<span class="jtag jtag-new">🆕 New</span>' : '';
+  const dateBadge = j.dateAdded ? `<span class="jtag jtag-date">📅 ${fmtDate(j.dateAdded)}</span>` : '';
+  const expiredBadge = j.expired ? '<span class="jtag jtag-expired">⚠️ Closed</span>' : '';
+  const appliedBadge = isApplied ? `<span class="jtag jtag-applied">✅ Applied ${fmtDate(appliedMap[j.url])}</span>` : '';
+  return `<div class="jcard${j.expired ? ' jcard-expired' : ''}">
     <div class="jcard-top">
       <span class="jcard-icon">${j.icon}</span>
       <div class="jcard-body">
-        <div class="jcard-title">${j.title}</div>
-        <div class="jcard-employer">${j.employer}</div>
+        <div style="display:flex;align-items:flex-start;gap:6px;">
+          <div style="flex:1;min-width:0;">
+            <div class="jcard-title">${j.title}</div>
+            <div class="jcard-employer">${j.employer}</div>
+          </div>
+          <button class="jcard-fav-btn" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+            onclick="toggleFav('${urlAttr.replace(/'/g,"\\'")}', this)">${isFav ? '⭐' : '☆'}</button>
+        </div>
         <div class="jcard-tags">
           <span class="jtag jtag-loc">📍 ${j.location}</span>
           <span class="jtag jtag-src">${j.source}</span>
+          ${newBadge}
           ${j.hot ? '<span class="jtag jtag-hot">🔥 Hot Listing</span>' : ''}
           ${j.note ? `<span class="jtag jtag-note">📌 ${j.note}</span>` : ''}
+          ${dateBadge}
+          ${expiredBadge}
+          ${appliedBadge}
         </div>
-        <a class="jcard-apply" href="${j.url}" target="_blank">View &amp; Apply →</a>
+        <div class="jcard-actions">
+          <a class="jcard-apply" href="${j.url}" target="_blank">View &amp; Apply →</a>
+          ${!j.expired ? `<button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${j.location}')">✍️ Build Application</button>` : ''}
+          <button class="jcard-applied-btn${isApplied ? ' is-applied' : ''}"
+            title="${isApplied ? 'Click to remove from Applied' : 'Mark as applied'}"
+            onclick="toggleApplied('${urlAttr.replace(/'/g,"\\'")}', this)">${isApplied ? '✅ Applied' : '➕ Mark Applied'}</button>
+          ${!j.expired ? `<label class="jcard-close-wrap" title="Mark this job as closed">
+            <input type="checkbox" class="jcard-close-cb" data-url="${urlAttr}" onchange="markJobClosed(this.dataset.url, this)">
+            <span class="jcard-close-label">Mark closed</span>
+          </label>` : ''}
+        </div>
       </div>
     </div>
   </div>`;
@@ -773,6 +1513,586 @@ function cardHTML(j) {
 
 buildFilterBar();
 renderJobs();
+updateFavBadge();
+updateAppliedBadge();
+document.getElementById('listings-footer').textContent =
+  `Listings last updated ${fmtDate(latestDate())} · Ask Dad to refresh with Claude for the latest results`;
+
+// ── OPEN APPLY TAB (pre-filled from job card) ──
+function openApply(title, employer, location) {
+  document.getElementById('inp-title').value = title;
+  document.getElementById('inp-employer').value = employer;
+  document.getElementById('inp-location').value = location || '';
+  document.getElementById('inp-mgr').value = '';
+  document.getElementById('inp-focus').value = 'auto';
+  document.getElementById('inp-jd').value = '';
+  document.getElementById('inp-notes').value = '';
+  // Reset output to placeholder
+  document.getElementById('applyOutput').innerHTML = `
+    <div class="output-placeholder">
+      <div class="ph-icon">📄</div>
+      <p>Job details pre-filled! Paste the full job description below and click <strong>Generate</strong>.</p>
+    </div>`;
+  // Switch to apply tab
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-apply').classList.add('active');
+  document.getElementById('tab-btn-apply').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => document.getElementById('inp-jd').focus(), 400);
+}
+
+// ── JOB TYPE DETECTION ──
+function detectJobType(title, jd) {
+  const text = (title + ' ' + jd).toLowerCase();
+  const scores = {
+    forensics: ['forensic', 'crime scene', 'evidence', 'lab scientist', 'csi', 'dna', 'fingerprint', 'toxicol', 'ballistic', 'latent', 'trace', 'serology'].filter(k => text.includes(k)).length,
+    court:     ['court', 'clerk', 'records', 'judicial', 'magistrate', 'paralegal', 'legal assistant', 'docket', 'filing', 'administrative'].filter(k => text.includes(k)).length,
+    victim:    ['victim', 'advocate', 'witness', 'counselor', 'crisis', 'support services', 'survivor', 'trauma', 'case manager'].filter(k => text.includes(k)).length,
+    probation: ['probation', 'parole', 'correction', 'detention', 'officer', 'patrol', 'deputy', 'enforcement', 'community supervision'].filter(k => text.includes(k)).length,
+  };
+  const max = Math.max(...Object.values(scores));
+  if (max === 0) return 'general';
+  return Object.keys(scores).find(k => scores[k] === max);
+}
+
+// ── ISABELLA'S VERIFIED PROFILE DATA ──
+const PROFILE = {
+  name: 'Isabella Gonzalez',
+  city: 'Athens, Georgia 30606',
+  email: 'bellagonz2003@gmail.com',
+  phone: '470-418-9124',
+  linkedin: 'linkedin.com/in/isabella-gonzalez-063437244',
+
+  summaries: {
+    forensics: 'Detail-oriented Criminal Justice graduate from the University of Georgia (May 2026) with direct crime scene observation experience and hands-on law enforcement records management through a university-supervised internship at the Walton County Sheriff\'s Office. Skilled in evidence documentation, law enforcement database systems, and data analysis using GBI datasets. Committed to applying meticulous attention to detail and a strong academic foundation in a forensic sciences career.',
+    court:     'Detail-oriented Criminal Justice graduate from the University of Georgia (May 2026) with extensive hands-on experience in law enforcement records management, agency database operations, and confidential case file documentation through a university-supervised internship at the Walton County Sheriff\'s Office. Demonstrated commitment to accuracy, procedural compliance, and professionalism in an active government law enforcement environment.',
+    victim:    'Compassionate and detail-oriented Criminal Justice graduate from the University of Georgia (May 2026) with law enforcement internship experience and strong professional communication skills developed across diverse, high-pressure environments. Experienced in maintaining strict confidentiality, collaborating with law enforcement professionals, and providing reliable support in a criminal justice setting. Committed to serving individuals involved in the justice system with empathy, integrity, and professionalism.',
+    probation: 'Dedicated Criminal Justice graduate from the University of Georgia (May 2026) with hands-on law enforcement experience through a university-supervised internship at the Walton County Sheriff\'s Office. Skilled in agency database systems, case file management, and professional collaboration with sworn officers, detectives, and investigators. Proven ability to work independently under pressure with sound judgment and meticulous attention to detail.',
+    general:   'Detail-oriented Criminal Justice graduate from the University of Georgia (May 2026) with hands-on law enforcement experience through a university-supervised internship at the Walton County Sheriff\'s Office. Skilled in records management, law enforcement database systems, and professional collaboration with law enforcement personnel. Strong foundation in criminal justice principles, research methods, and administrative procedures.',
+  },
+
+  // Internship bullets with priority scores per job type
+  internBullets: [
+    {
+      text: 'Observed crime scene processing procedures, including evidence photography and documentation',
+      priority: { forensics: 1, court: 5, victim: 5, probation: 4, general: 3 }
+    },
+    {
+      text: 'Utilized law enforcement agency databases to enter, retrieve, and verify data, ensuring accuracy and accessibility of records for investigators and case management',
+      priority: { forensics: 2, court: 1, victim: 4, probation: 1, general: 1 }
+    },
+    {
+      text: 'Supported evidence tracking and documentation procedures, maintaining accurate logs and inventory records for proper case file management',
+      priority: { forensics: 3, court: 2, victim: 5, probation: 2, general: 2 }
+    },
+    {
+      text: 'Maintained strict confidentiality while handling sensitive case files, criminal records, and internal agency communications in accordance with departmental policies',
+      priority: { forensics: 4, court: 3, victim: 2, probation: 3, general: 4 }
+    },
+    {
+      text: 'Collaborated with sworn officers, detectives, and investigators, demonstrating professionalism, reliability, and effective communication in a law enforcement environment',
+      priority: { forensics: 5, court: 4, victim: 3, probation: 5, general: 5 }
+    },
+  ],
+
+  researchBullets: [
+    'Led an independent research project analyzing the correlation between violent crime rate fluctuations and law enforcement officer turnover across Georgia counties',
+    'Collected and synthesized crime data from the Georgia Bureau of Investigation (GBI) and Department of Community Affairs (DCA) databases, ensuring data accuracy and proper sourcing',
+    'Applied quantitative research methods to produce a comprehensive written report with data visualizations and statistical analysis',
+    'Presented research findings to faculty and peers in a professional academic setting',
+  ],
+
+  skills: {
+    forensics: [
+      'Law enforcement database systems and records management',
+      'Evidence documentation and case file management',
+      'Quantitative data analysis and research methods (GBI, DCA datasets)',
+      'Report writing and administrative record keeping',
+      'Proficiency in Microsoft Office Suite (Word, Excel, PowerPoint)',
+      'Meticulous attention to detail in high-volume environments',
+      'Ability to work independently and exercise sound judgment under pressure',
+      'Strong written and verbal communication skills',
+    ],
+    court: [
+      'Law enforcement database systems and records management',
+      'Report writing, case file documentation, and administrative record keeping',
+      'Proficiency in Microsoft Office Suite (Word, Excel, PowerPoint)',
+      'Strong written and verbal communication skills',
+      'Meticulous attention to detail in high-volume environments',
+      'Strict confidentiality with sensitive records and communications',
+      'Time management and organizational skills',
+      'Quantitative data analysis and research methods',
+    ],
+    victim: [
+      'Strong written and verbal communication skills',
+      'Conflict resolution, de-escalation, and professional interpersonal skills',
+      'Strict confidentiality with sensitive case files and criminal records',
+      'Professional collaboration with law enforcement personnel',
+      'Proficiency in Microsoft Office Suite (Word, Excel, PowerPoint)',
+      'Law enforcement database systems and records management',
+      'Ability to work independently and exercise sound judgment under pressure',
+      'Time management and attention to detail',
+    ],
+    probation: [
+      'Law enforcement database systems and records management',
+      'Report writing, case file documentation, and administrative record keeping',
+      'Conflict resolution, de-escalation, and professional interpersonal skills',
+      'Ability to work independently and exercise sound judgment under pressure',
+      'Strong written and verbal communication skills',
+      'Proficiency in Microsoft Office Suite (Word, Excel, PowerPoint)',
+      'Quantitative data analysis and research methods',
+      'Time management and meticulous attention to detail',
+    ],
+    general: [
+      'Law enforcement database systems and records management',
+      'Report writing, case file documentation, and administrative record keeping',
+      'Quantitative data analysis and research methods (GBI, DCA datasets)',
+      'Proficiency in Microsoft Office Suite (Word, Excel, PowerPoint)',
+      'Strong written and verbal communication skills',
+      'Conflict resolution, de-escalation, and professional interpersonal skills',
+      'Ability to work independently and exercise sound judgment under pressure',
+      'Time management and meticulous attention to detail in high-volume environments',
+    ],
+  },
+
+  coverLetterBodies: {
+    forensics: {
+      p1: (title, employer) => `I am writing to express my strong interest in the ${title} position with ${employer}. As a Criminal Justice graduate from the University of Georgia (May 2026) with direct crime scene observation experience and a demonstrated commitment to forensic accuracy, I am eager to contribute to ${employer}'s mission of thorough, evidence-based investigation.`,
+      p2: () => `Currently completing a 15-credit-hour university-supervised internship at the Walton County Sheriff\'s Office, I have gained firsthand experience observing crime scene processing procedures, including evidence photography and documentation. I work daily with law enforcement agency databases to enter, retrieve, and verify data, and I support evidence tracking and case file management while maintaining strict confidentiality with sensitive records. This experience has reinforced my meticulous attention to detail and deep respect for evidentiary procedure.`,
+      p3: () => `Complementing my practical experience, I am the lead researcher on an independent study at the University of Georgia analyzing the correlation between violent crime rates and law enforcement officer turnover across Georgia counties, using data from the Georgia Bureau of Investigation and Department of Community Affairs. This project has strengthened my quantitative analytical skills and my ability to synthesize complex datasets — skills I believe are highly applicable to a forensic sciences environment.`,
+      p4: (employer) => `I would welcome the opportunity to discuss how my experience and academic preparation align with the requirements of this role at ${employer}. Thank you for your time and consideration, and I look forward to speaking with you.`,
+    },
+    court: {
+      p1: (title, employer) => `I am writing to express my interest in the ${title} position with ${employer}. As a Criminal Justice graduate from the University of Georgia (May 2026) with hands-on law enforcement records management experience, I am confident in my ability to contribute to the accuracy, efficiency, and professionalism of ${employer}'s operations.`,
+      p2: () => `Through my current university-supervised internship at the Walton County Sheriff\'s Office, I have developed strong skills in law enforcement database systems, working daily to enter, retrieve, and verify data that supports investigators and case management. I am responsible for maintaining accurate case file documentation and inventory records while adhering to strict confidentiality protocols for sensitive criminal records and internal communications. This experience has given me a deep appreciation for the procedural precision required in court and records environments.`,
+      p3: () => `My academic research on violent crime data from Georgia Bureau of Investigation datasets has further strengthened my data analysis and technical writing skills, including producing formal reports with statistical analysis and data visualizations. I also hold strong proficiency in Microsoft Office Suite and was recognized as a Presidential Scholar at UGA, reflecting the academic rigor and attention to detail I bring to every professional responsibility.`,
+      p4: (employer) => `I would welcome the opportunity to discuss how my background aligns with this position at ${employer}. Thank you for your time and consideration.`,
+    },
+    victim: {
+      p1: (title, employer) => `I am writing to apply for the ${title} position with ${employer}. As a Criminal Justice graduate from the University of Georgia (May 2026) with a strong commitment to public service and professional communication experience within a law enforcement setting, I am drawn to the meaningful work of supporting crime victims and witnesses through the justice process.`,
+      p2: () => `During my university-supervised internship at the Walton County Sheriff\'s Office, I have worked closely with sworn officers, detectives, and investigators, developing a practical understanding of the criminal justice process and the importance of clear, empathetic communication. I handle sensitive case files and criminal records with strict confidentiality on a daily basis, and I have developed the professional composure required to function effectively in a demanding law enforcement environment.`,
+      p3: () => `Beyond my law enforcement experience, my selection for the Walt Disney World College Program — a nationally competitive internship — developed my ability to manage complex, fast-paced situations with diverse populations while exercising independent judgment and de-escalation skills. I believe this combination of criminal justice knowledge and proven interpersonal communication directly supports effective victim advocacy work.`,
+      p4: (employer) => `I would be honored to bring my skills and genuine commitment to this work to ${employer}. Thank you for considering my application, and I look forward to the opportunity to speak with you.`,
+    },
+    probation: {
+      p1: (title, employer) => `I am writing to express my interest in the ${title} position with ${employer}. As a Criminal Justice graduate from the University of Georgia (May 2026) with hands-on law enforcement internship experience and a demonstrated ability to function professionally in an active law enforcement agency environment, I am eager to begin a career in this field.`,
+      p2: () => `Through my current university-supervised internship at the Walton County Sheriff\'s Office, I have gained direct experience working alongside sworn officers and detectives, developing a practical understanding of law enforcement operations, records management, and the professional standards required in this field. I manage agency databases and case file documentation daily, maintaining accuracy and strict confidentiality while demonstrating reliability and sound judgment under pressure.`,
+      p3: () => `My academic training at the University of Georgia — including coursework in Criminal Justice Administration, Criminal Procedure, and Research Methods — combined with my ongoing independent research analyzing crime data from GBI and Department of Community Affairs datasets, has provided me with a strong analytical foundation and thorough understanding of the criminal justice system. I was recognized as a Presidential Scholar at UGA and hold a strong academic record throughout my program.`,
+      p4: (employer) => `I am committed to a career in public safety and would welcome the opportunity to discuss this position with ${employer} further. Thank you for your time and consideration.`,
+    },
+    general: {
+      p1: (title, employer) => `I am writing to express my interest in the ${title} position with ${employer}. As a Criminal Justice graduate from the University of Georgia (May 2026) with hands-on law enforcement experience and a strong academic background, I am enthusiastic about the opportunity to contribute to ${employer}'s team in a meaningful way.`,
+      p2: () => `I am currently completing a 15-credit-hour university-supervised internship at the Walton County Sheriff\'s Office, where I work with law enforcement agency databases, support evidence tracking and case file documentation, and collaborate daily with sworn officers, detectives, and investigators. This experience has developed my professionalism, attention to detail, and practical understanding of law enforcement operations.`,
+      p3: () => `Additionally, I am the lead researcher on an independent study at UGA analyzing violent crime data using GBI and Department of Community Affairs datasets, which has strengthened my quantitative analysis and professional writing skills. My background also includes experience in fast-paced, customer-facing and operational environments that required sound judgment, reliability, and effective communication with diverse groups.`,
+      p4: (employer) => `I would welcome the opportunity to discuss how my skills and experience align with this opportunity at ${employer}. Thank you for your consideration, and I look forward to speaking with you.`,
+    },
+  },
+};
+
+// ── GENERATE APPLICATION ──
+function generateApplication() {
+  const title    = document.getElementById('inp-title').value.trim();
+  const employer = document.getElementById('inp-employer').value.trim();
+  const location = document.getElementById('inp-location').value.trim();
+  const mgr      = document.getElementById('inp-mgr').value.trim();
+  const jd       = document.getElementById('inp-jd').value;
+  const focusSel = document.getElementById('inp-focus').value;
+
+  if (!title || !employer) {
+    alert('Please enter at least a Job Title and Employer before generating.');
+    return;
+  }
+
+  const jobType = focusSel === 'auto' ? detectJobType(title, jd) : focusSel;
+  const typeLabels = {
+    forensics: '🔬 Forensics / Crime Scene',
+    court:     '⚖️ Court / Records / Legal',
+    victim:    '🤝 Victim Services / Advocacy',
+    probation: '🏛️ Probation / Law Enforcement',
+    general:   '📋 General Criminal Justice',
+  };
+
+  // Sort internship bullets by priority for this job type
+  const sortedBullets = [...PROFILE.internBullets].sort((a, b) =>
+    (a.priority[jobType] || 5) - (b.priority[jobType] || 5)
+  );
+
+  const skills = PROFILE.skills[jobType] || PROFILE.skills.general;
+  const summary = PROFILE.summaries[jobType] || PROFILE.summaries.general;
+  const clBody = PROFILE.coverLetterBodies[jobType] || PROFILE.coverLetterBodies.general;
+
+  const resumeHTML  = buildResumeHTML(title, employer, summary, sortedBullets, skills, jobType);
+  const coverHTML   = buildCoverLetterHTML(title, employer, location, mgr, clBody);
+  const resumeText  = buildResumeText(title, employer, summary, sortedBullets, skills, jobType);
+  const coverText   = buildCoverLetterText(title, employer, location, mgr, clBody);
+
+  let activeOutTab = 'resume';
+
+  function renderOutTab() {
+    document.getElementById('out-content').innerHTML =
+      activeOutTab === 'resume' ? resumeHTML : coverHTML;
+    document.querySelectorAll('.out-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.tab === activeOutTab);
+    });
+    document.getElementById('copy-btn').onclick = () => {
+      copyText(activeOutTab === 'resume' ? resumeText : coverText);
+    };
+  }
+
+  const badgeClass = 'badge-' + jobType;
+  document.getElementById('applyOutput').innerHTML = `
+    <div class="out-header">
+      <div class="out-job-info">
+        <div class="out-job-title">${escH(title)}</div>
+        <div class="out-job-employer">${escH(employer)}</div>
+      </div>
+      <span class="out-type-badge ${badgeClass}">${typeLabels[jobType]}</span>
+    </div>
+
+    <div class="out-tabs">
+      <button class="out-tab active" data-tab="resume" onclick="switchOutTab(this, 'resume')">📄 Resume</button>
+      <button class="out-tab" data-tab="cover" onclick="switchOutTab(this, 'cover')">✉️ Cover Letter</button>
+    </div>
+
+    <div class="out-actions">
+      <button class="out-action-btn" id="copy-btn" onclick="">📋 Copy as Text</button>
+      <button class="out-action-btn" onclick="printDoc()">🖨️ Print</button>
+    </div>
+
+    <div id="out-content"></div>
+  `;
+
+  // Store text for copy/print
+  window._currentResumeText = resumeText;
+  window._currentCoverText  = coverText;
+  window._currentResumeHTML = resumeHTML;
+  window._currentCoverHTML  = coverHTML;
+  window._activeOutTab = 'resume';
+
+  document.getElementById('copy-btn').onclick = () => copyText(resumeText);
+  renderOutTab();
+}
+
+window.switchOutTab = function(btn, tab) {
+  window._activeOutTab = tab;
+  document.querySelectorAll('.out-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('out-content').innerHTML =
+    tab === 'resume' ? window._currentResumeHTML : window._currentCoverHTML;
+  document.getElementById('copy-btn').onclick = () =>
+    copyText(tab === 'resume' ? window._currentResumeText : window._currentCoverText);
+};
+
+window.printDoc = function() {
+  const html = window._activeOutTab === 'resume'
+    ? window._currentResumeHTML
+    : window._currentCoverHTML;
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>Isabella Gonzalez — Application</title>
+    <style>
+      body { font-family: Georgia, serif; font-size: 11pt; color: #000; margin: 0.75in; }
+      .doc-name { font-size: 18pt; font-weight: bold; text-align: center; margin-bottom: 4px; }
+      .doc-contact { text-align: center; font-size: 9.5pt; color: #333; margin-bottom: 12px; }
+      hr { border: none; border-top: 1px solid #000; margin: 4px 0 8px; }
+      .doc-section-title { font-size: 9pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #000; padding-bottom: 2px; margin: 10px 0 6px; }
+      .doc-entry-header { display: flex; justify-content: space-between; }
+      .doc-entry-title { font-weight: bold; font-size: 10.5pt; }
+      .doc-entry-date { font-size: 9.5pt; color: #444; }
+      .doc-entry-org { font-size: 9.5pt; color: #444; margin-bottom: 4px; }
+      .doc-bullets { margin: 0; padding-left: 16px; }
+      .doc-bullets li { margin-bottom: 2px; font-size: 10pt; }
+      .doc-summary { font-size: 10pt; line-height: 1.6; }
+      .doc-skills-grid { columns: 2; gap: 12px; }
+      .doc-skill-item { font-size: 10pt; break-inside: avoid; }
+      .doc-skill-item::before { content: "• "; }
+      .doc-coursework, .doc-honors { font-size: 10pt; }
+      /* Letter styles */
+      .letter-date, .letter-addr { font-size: 10pt; margin-bottom: 14px; line-height: 1.5; }
+      .letter-body p { font-size: 10.5pt; line-height: 1.7; margin-bottom: 12px; }
+      .letter-sign { margin-top: 24px; font-size: 10pt; }
+      .letter-sign strong { display: block; font-size: 11pt; font-weight: bold; margin-top: 24px; }
+    </style>
+  </head><body>${html}</body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(() => { win.print(); }, 400);
+};
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function escH(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── BUILD RESUME HTML ──
+function buildResumeHTML(jobTitle, employer, summary, bullets, skills, jobType) {
+  const bulletItems = bullets.map(b => `<li>${escH(b.text)}</li>`).join('');
+  const skillItems  = skills.map(s => `<div class="doc-skill-item">${escH(s)}</div>`).join('');
+  const halfSkills  = Math.ceil(skills.length / 2);
+  const col1 = skills.slice(0, halfSkills).map(s => `<div class="doc-skill-item">${escH(s)}</div>`).join('');
+  const col2 = skills.slice(halfSkills).map(s => `<div class="doc-skill-item">${escH(s)}</div>`).join('');
+
+  // For victim/general job types, include Disney prominently
+  const showDisney = (jobType === 'victim' || jobType === 'probation' || jobType === 'general');
+
+  return `<div class="doc-preview">
+  <div class="doc-name">Isabella Gonzalez</div>
+  <div class="doc-contact">
+    Athens, Georgia 30606 &nbsp;|&nbsp; bellagonz2003@gmail.com &nbsp;|&nbsp; 470-418-9124 &nbsp;|&nbsp; linkedin.com/in/isabella-gonzalez-063437244
+  </div>
+  <hr class="doc-divider">
+
+  <div class="doc-section">
+    <div class="doc-section-title">Professional Summary</div>
+    <div class="doc-summary">${escH(summary)}</div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Education</div>
+    <div class="doc-entry">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">University of Georgia — Athens, Georgia</span>
+        <span class="doc-entry-date">May 2026</span>
+      </div>
+      <div class="doc-entry-org">Bachelor of Arts in Criminal Justice</div>
+      <div class="doc-coursework"><strong>Relevant Coursework:</strong> Criminology, Criminal Justice Administration, Criminal Procedure, Criminal Punishment and Society, Research Methods in Criminal Justice, Sociology of Alcohol and Drug Use, Communication Law</div>
+      <div class="doc-honors" style="margin-top:4px;"><strong>Honors:</strong> Presidential Scholar (Summer 2025) · National Honor Society · Beta Club</div>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Law Enforcement Experience</div>
+    <div class="doc-entry">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Criminal Justice Intern</span>
+        <span class="doc-entry-date">January 2026 – Present</span>
+      </div>
+      <div class="doc-entry-org">Walton County Sheriff's Office — Monroe, Georgia &nbsp;|&nbsp; University-supervised Internship (15 credit hours) · University of Georgia</div>
+      <ul class="doc-bullets">${bulletItems}</ul>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Research &amp; Analytical Experience</div>
+    <div class="doc-entry">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Lead Researcher — Violent Crime Rates vs. Law Enforcement Turnover</span>
+        <span class="doc-entry-date">University of Georgia (Ongoing)</span>
+      </div>
+      <ul class="doc-bullets">
+        ${PROFILE.researchBullets.map(b => `<li>${escH(b)}</li>`).join('')}
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Skills &amp; Competencies</div>
+    <div class="doc-skills-grid">
+      <div>${col1}</div>
+      <div>${col2}</div>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Additional Professional Experience</div>
+    ${showDisney ? `<div class="doc-entry" style="margin-bottom:8px;">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Disney College Program Intern — Walt Disney World</span>
+        <span class="doc-entry-date">January 2024 – May 2024</span>
+      </div>
+      <div class="doc-entry-org">Orlando, Florida</div>
+      <ul class="doc-bullets">
+        <li>Selected for a nationally competitive internship program; managed high-volume guest operations and safety procedures in a fast-paced environment</li>
+        <li>Adhered to rigorous corporate safety protocols and exercised independent judgment to manage complex situations while maintaining clear communication and de-escalation skills with diverse populations</li>
+      </ul>
+    </div>` : `<div class="doc-entry" style="margin-bottom:8px;">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Disney College Program Intern — Walt Disney World</span>
+        <span class="doc-entry-date">January 2024 – May 2024</span>
+      </div>
+      <div class="doc-entry-org">Orlando, Florida</div>
+      <ul class="doc-bullets">
+        <li>Selected for a nationally competitive internship; adhered to rigorous safety protocols and exercised independent judgment in a high-volume, fast-paced environment</li>
+      </ul>
+    </div>`}
+    <div class="doc-entry">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Customer Associate</span>
+        <span class="doc-entry-date">2021 – 2023</span>
+      </div>
+      <div class="doc-entry-org">American Eagle Outfitters, Snellville, GA &nbsp;·&nbsp; Vera Bradley, Dahlonega, GA &nbsp;·&nbsp; Chick-fil-A, Loganville, GA</div>
+      <ul class="doc-bullets">
+        <li>Entrusted with store opening/closing procedures, secure cash management, and inventory accuracy in high-volume retail settings</li>
+        <li>Provided professional customer communication and conflict resolution while coordinating team responsibilities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-section-title">Athletics &amp; Leadership</div>
+    <div class="doc-entry">
+      <div class="doc-entry-header">
+        <span class="doc-entry-title">Varsity &amp; Club Volleyball</span>
+        <span class="doc-entry-date">5 Years</span>
+      </div>
+      <ul class="doc-bullets">
+        <li>Competed on varsity high school and regional club teams, traveling throughout the Southeast for competitive tournaments</li>
+        <li>Developed discipline, resilience, and the ability to perform under pressure as part of a cohesive team</li>
+      </ul>
+    </div>
+  </div>
+</div>`;
+}
+
+// ── BUILD COVER LETTER HTML ──
+function buildCoverLetterHTML(jobTitle, employer, location, mgr, clBody) {
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const salutation = mgr ? `Dear ${escH(mgr)},` : 'Dear Hiring Manager,';
+  const addrLines = [
+    escH(employer),
+    location ? escH(location) : null,
+  ].filter(Boolean).join('<br>');
+
+  return `<div class="letter-preview">
+  <div class="doc-name" style="margin-bottom:4px;">Isabella Gonzalez</div>
+  <div class="doc-contact" style="margin-bottom:24px;">
+    Athens, Georgia 30606 &nbsp;|&nbsp; bellagonz2003@gmail.com &nbsp;|&nbsp; 470-418-9124
+  </div>
+  <div class="letter-date">${today}</div>
+  <div class="letter-addr">${addrLines}</div>
+  <div class="letter-body">
+    <p>${salutation}</p>
+    <p>${escH(clBody.p1(jobTitle, employer))}</p>
+    <p>${escH(clBody.p2())}</p>
+    <p>${escH(clBody.p3())}</p>
+    <p>${escH(clBody.p4(employer))}</p>
+  </div>
+  <div class="letter-sign">
+    Sincerely,
+    <strong>Isabella Gonzalez</strong>
+    bellagonz2003@gmail.com &nbsp;|&nbsp; 470-418-9124<br>
+    linkedin.com/in/isabella-gonzalez-063437244
+  </div>
+</div>`;
+}
+
+// ── BUILD RESUME PLAIN TEXT ──
+function buildResumeText(jobTitle, employer, summary, bullets, skills, jobType) {
+  const line = (char, n=60) => char.repeat(n);
+  const showDisney = (jobType === 'victim' || jobType === 'probation' || jobType === 'general');
+
+  return [
+    'ISABELLA GONZALEZ',
+    'Athens, Georgia 30606  |  bellagonz2003@gmail.com  |  470-418-9124  |  linkedin.com/in/isabella-gonzalez-063437244',
+    '',
+    line('─'),
+    'PROFESSIONAL SUMMARY',
+    line('─'),
+    summary,
+    '',
+    line('─'),
+    'EDUCATION',
+    line('─'),
+    'University of Georgia, Athens, Georgia                                              May 2026',
+    'Bachelor of Arts in Criminal Justice',
+    'Relevant Coursework: Criminology, Criminal Justice Administration, Criminal Procedure, Criminal Punishment',
+    '  and Society, Research Methods in Criminal Justice, Sociology of Alcohol and Drug Use, Communication Law',
+    'Honors: Presidential Scholar (Summer 2025) · National Honor Society · Beta Club',
+    '',
+    line('─'),
+    'LAW ENFORCEMENT EXPERIENCE',
+    line('─'),
+    'Criminal Justice Intern | Walton County Sheriff\'s Office, Monroe, Georgia         January 2026 – Present',
+    'University-supervised Criminal Justice Internship (15 credit hours) — University of Georgia',
+    ...bullets.map(b => '  • ' + b.text),
+    '',
+    line('─'),
+    'RESEARCH & ANALYTICAL EXPERIENCE',
+    line('─'),
+    'Lead Researcher: Violent Crime Rates vs. Law Enforcement Turnover — University of Georgia (Ongoing)',
+    ...PROFILE.researchBullets.map(b => '  • ' + b),
+    '',
+    line('─'),
+    'SKILLS & COMPETENCIES',
+    line('─'),
+    ...skills.map(s => '  • ' + s),
+    '',
+    line('─'),
+    'ADDITIONAL PROFESSIONAL EXPERIENCE',
+    line('─'),
+    showDisney
+      ? 'Disney College Program Intern | Walt Disney World, Orlando, Florida             January 2024 – May 2024'
+      : 'Disney College Program Intern | Walt Disney World, Orlando, Florida             January 2024 – May 2024',
+    '  • Selected for a nationally competitive internship program; managed high-volume guest operations and safety',
+    '    procedures in a fast-paced environment.',
+    showDisney
+      ? '  • Exercised independent judgment to manage complex situations with diverse populations while maintaining'
+      + '\n    clear communication and de-escalation skills.'
+      : '  • Adhered to rigorous safety protocols and exercised independent judgment in a high-volume environment.',
+    '',
+    'Customer Associate  |  American Eagle Outfitters (2023) · Vera Bradley (2022) · Chick-fil-A (2021)',
+    '  • Entrusted with store opening/closing procedures, secure cash management, and inventory accuracy.',
+    '  • Provided professional customer communication and conflict resolution while coordinating team responsibilities.',
+    '',
+    line('─'),
+    'ATHLETICS & LEADERSHIP',
+    line('─'),
+    'Varsity & Club Volleyball — 5 Years',
+    '  • Competed on varsity high school and regional club teams throughout the Southeast.',
+    '  • Developed discipline, resilience, and the ability to perform under pressure as part of a cohesive team.',
+    '',
+  ].join('\n');
+}
+
+// ── BUILD COVER LETTER PLAIN TEXT ──
+function buildCoverLetterText(jobTitle, employer, location, mgr, clBody) {
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const salutation = mgr ? `Dear ${mgr},` : 'Dear Hiring Manager,';
+  const addrLines = [employer, location || ''].filter(Boolean).join('\n');
+
+  return [
+    'Isabella Gonzalez',
+    'Athens, Georgia 30606  |  bellagonz2003@gmail.com  |  470-418-9124',
+    '',
+    today,
+    '',
+    addrLines,
+    '',
+    salutation,
+    '',
+    clBody.p1(jobTitle, employer),
+    '',
+    clBody.p2(),
+    '',
+    clBody.p3(),
+    '',
+    clBody.p4(employer),
+    '',
+    'Sincerely,',
+    '',
+    '',
+    'Isabella Gonzalez',
+    'bellagonz2003@gmail.com  |  470-418-9124',
+    'linkedin.com/in/isabella-gonzalez-063437244',
+  ].join('\n');
+}
 </script>
 
 </body>
