@@ -113,6 +113,23 @@
   .fav-clear-btn { font-size: 11px; font-weight: 600; color: #dc2626; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
   .fav-clear-btn:hover { background: #fecdd3; }
 
+  /* ── APPLIED BUTTON & BADGE ── */
+  .jcard-applied-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; border-radius: 6px; padding: 5px 12px; cursor: pointer; border: 1.5px solid #bbf7d0; background: #f0fdf4; color: #15803d; transition: all 0.15s; font-family: inherit; }
+  .jcard-applied-btn:hover { background: #dcfce7; border-color: #86efac; }
+  .jcard-applied-btn.is-applied { background: #15803d; color: white; border-color: #15803d; }
+  .jcard-applied-btn.is-applied:hover { background: #166534; }
+  .jtag-applied { background: #dcfce7; color: #15803d; font-weight: 700; }
+  .applied-count-badge { display: inline-block; background: #15803d; color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+  /* Applied tab */
+  .applied-empty { text-align: center; padding: 60px 24px; color: #a0aec0; }
+  .applied-empty-icon { font-size: 52px; margin-bottom: 14px; }
+  .applied-empty p { font-size: 14px; line-height: 1.7; max-width: 300px; margin: 0 auto; }
+  .applied-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .applied-header h2 { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .applied-clear-btn { font-size: 11px; font-weight: 600; color: #dc2626; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .applied-clear-btn:hover { background: #fecdd3; }
+  .applied-date-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 11px; color: #15803d; font-weight: 600; }
+
   /* ── CLOSE CHECKBOX ── */
   .jcard-close-wrap { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; cursor: pointer; }
   .jcard-close-cb { width: 13px; height: 13px; cursor: pointer; accent-color: #dc2626; flex-shrink: 0; }
@@ -267,6 +284,7 @@
   <button class="tab-btn" onclick="showTab('tips', this)">💡 Tips for Isabella</button>
   <button class="tab-btn" onclick="showTab('portals', this)">🗺️ Local Portals</button>
   <button class="tab-btn" id="tab-btn-favorites" onclick="showTab('favorites', this); buildFavoritesTab();">⭐ Favorites<span id="fav-tab-badge" class="fav-count-badge" style="display:none">0</span></button>
+  <button class="tab-btn" id="tab-btn-applied" onclick="showTab('applied', this); buildAppliedTab();">✅ Applied<span id="applied-tab-badge" class="applied-count-badge" style="display:none">0</span></button>
   <button class="tab-btn apply-tab" id="tab-btn-apply" onclick="showTab('apply', this)">✍️ Build Application</button>
 </div>
 
@@ -568,6 +586,11 @@
   <!-- ══ FAVORITES ══ -->
   <div class="section" id="tab-favorites">
     <div id="favList"></div>
+  </div>
+
+  <!-- ══ APPLIED ══ -->
+  <div class="section" id="tab-applied">
+    <div id="appliedList"></div>
   </div>
 
   <!-- ══ APPLY / APPLICATION BUILDER ══ -->
@@ -914,6 +937,118 @@ function clearAllFavs() {
   buildFavoritesTab();
 }
 
+// ── APPLIED JOBS (persisted in localStorage as { url: 'YYYY-MM-DD' }) ──
+const APPLIED_KEY = 'isabella-applied-jobs-v1';
+function getAppliedMap() {
+  try { return JSON.parse(localStorage.getItem(APPLIED_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveAppliedMap(map) {
+  try { localStorage.setItem(APPLIED_KEY, JSON.stringify(map)); } catch(e) {}
+}
+function toggleApplied(url, btn) {
+  const map = getAppliedMap();
+  const wasApplied = url in map;
+  if (wasApplied) {
+    if (!confirm('Remove this job from your Applied list?')) return;
+    delete map[url];
+  } else {
+    const today = new Date().toISOString().slice(0, 10);
+    map[url] = today;
+  }
+  saveAppliedMap(map);
+  const isNowApplied = url in map;
+  btn.textContent = isNowApplied ? '✅ Applied' : '➕ Mark Applied';
+  btn.className = 'jcard-applied-btn' + (isNowApplied ? ' is-applied' : '');
+  btn.title = isNowApplied ? 'Click to remove from Applied' : 'Mark as applied';
+  // Update the applied date tag on the card if present
+  const card = btn.closest('.jcard');
+  if (card) {
+    const existing = card.querySelector('.jtag-applied');
+    if (isNowApplied) {
+      if (!existing) {
+        const tags = card.querySelector('.jcard-tags');
+        if (tags) {
+          const span = document.createElement('span');
+          span.className = 'jtag jtag-applied';
+          span.textContent = '✅ Applied ' + fmtDate(map[url]);
+          tags.appendChild(span);
+        }
+      }
+    } else {
+      if (existing) existing.remove();
+    }
+  }
+  updateAppliedBadge();
+  if (document.getElementById('tab-applied').classList.contains('active')) buildAppliedTab();
+}
+function updateAppliedBadge() {
+  const count = Object.keys(getAppliedMap()).length;
+  const badge = document.getElementById('applied-tab-badge');
+  if (!badge) return;
+  if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
+}
+function buildAppliedTab() {
+  const map = getAppliedMap();
+  const el = document.getElementById('appliedList');
+  const urls = Object.keys(map);
+  if (urls.length === 0) {
+    el.innerHTML = `<div class="applied-empty"><div class="applied-empty-icon">📋</div><p>Nothing here yet — hit <strong>➕ Mark Applied</strong> on any listing after you submit an application.</p></div>`;
+    return;
+  }
+  // Sort by date applied, newest first
+  const appliedJobs = urls
+    .map(url => ({ job: JOBS.find(j => j.url === url), url, dateApplied: map[url] }))
+    .filter(e => e.job)
+    .sort((a, b) => b.dateApplied.localeCompare(a.dateApplied));
+  const cards = appliedJobs.map(({ job, dateApplied }) => {
+    const titleEsc = job.title.replace(/'/g, "\\'");
+    const employerEsc = job.employer.replace(/'/g, "\\'");
+    const urlAttr = job.url.replace(/"/g, '&quot;');
+    const isFav = getFavUrls().has(job.url);
+    return `<div class="jcard">
+      <div class="jcard-top">
+        <span class="jcard-icon">${job.icon}</span>
+        <div class="jcard-body">
+          <div style="display:flex;align-items:flex-start;gap:6px;">
+            <div style="flex:1;min-width:0;">
+              <div class="jcard-title">${job.title}</div>
+              <div class="jcard-employer">${job.employer}</div>
+            </div>
+            <button class="jcard-fav-btn" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+              onclick="toggleFav('${urlAttr.replace(/'/g,"\\'")}', this)">${isFav ? '⭐' : '☆'}</button>
+          </div>
+          <div class="applied-date-row">✅ Applied on ${fmtDate(dateApplied)}</div>
+          <div class="jcard-tags" style="margin-top:5px;">
+            <span class="jtag jtag-loc">📍 ${job.location}</span>
+            <span class="jtag jtag-src">${job.source}</span>
+            ${job.note ? `<span class="jtag jtag-note">📌 ${job.note}</span>` : ''}
+          </div>
+          <div class="jcard-actions">
+            <a class="jcard-apply" href="${job.url}" target="_blank">View Posting →</a>
+            <button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${job.location}')">✍️ Build Application</button>
+            <button class="jcard-applied-btn is-applied" onclick="toggleApplied('${urlAttr.replace(/'/g,"\\'")}', this)" title="Click to remove from Applied">✅ Applied</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="applied-header">
+      <h2>✅ Applications Tracker <span style="font-weight:400;color:#718096;font-size:13px">(${appliedJobs.length} submitted)</span></h2>
+      <button class="applied-clear-btn" onclick="clearAllApplied()">Clear all</button>
+    </div>
+    <div class="job-list">${cards}</div>`;
+}
+function clearAllApplied() {
+  if (!confirm('Clear your entire Applied list?')) return;
+  saveAppliedMap({});
+  updateAppliedBadge();
+  buildAppliedTab();
+  renderJobs(); // refresh main list to un-highlight applied buttons
+}
+
 // ── MANUALLY-CLOSED JOBS (persisted in localStorage) ──
 const CLOSED_KEY = 'isabella-closed-jobs-v1';
 function getClosedUrls() {
@@ -1021,9 +1156,12 @@ function cardHTML(j) {
   const employerEsc = j.employer.replace(/'/g, "\\'");
   const urlAttr = j.url.replace(/"/g, '&quot;');
   const isFav = getFavUrls().has(j.url);
+  const appliedMap = getAppliedMap();
+  const isApplied = j.url in appliedMap;
   const newBadge  = (!j.expired && isNew(j.dateAdded)) ? '<span class="jtag jtag-new">🆕 New</span>' : '';
   const dateBadge = j.dateAdded ? `<span class="jtag jtag-date">📅 ${fmtDate(j.dateAdded)}</span>` : '';
   const expiredBadge = j.expired ? '<span class="jtag jtag-expired">⚠️ Closed</span>' : '';
+  const appliedBadge = isApplied ? `<span class="jtag jtag-applied">✅ Applied ${fmtDate(appliedMap[j.url])}</span>` : '';
   return `<div class="jcard${j.expired ? ' jcard-expired' : ''}">
     <div class="jcard-top">
       <span class="jcard-icon">${j.icon}</span>
@@ -1044,10 +1182,14 @@ function cardHTML(j) {
           ${j.note ? `<span class="jtag jtag-note">📌 ${j.note}</span>` : ''}
           ${dateBadge}
           ${expiredBadge}
+          ${appliedBadge}
         </div>
         <div class="jcard-actions">
           <a class="jcard-apply" href="${j.url}" target="_blank">View &amp; Apply →</a>
           ${!j.expired ? `<button class="jcard-build" onclick="openApply('${titleEsc}', '${employerEsc}', '${j.location}')">✍️ Build Application</button>` : ''}
+          <button class="jcard-applied-btn${isApplied ? ' is-applied' : ''}"
+            title="${isApplied ? 'Click to remove from Applied' : 'Mark as applied'}"
+            onclick="toggleApplied('${urlAttr.replace(/'/g,"\\'")}', this)">${isApplied ? '✅ Applied' : '➕ Mark Applied'}</button>
           ${!j.expired ? `<label class="jcard-close-wrap" title="Mark this job as closed">
             <input type="checkbox" class="jcard-close-cb" data-url="${urlAttr}" onchange="markJobClosed(this.dataset.url, this)">
             <span class="jcard-close-label">Mark closed</span>
@@ -1061,6 +1203,7 @@ function cardHTML(j) {
 buildFilterBar();
 renderJobs();
 updateFavBadge();
+updateAppliedBadge();
 document.getElementById('listings-footer').textContent =
   `Listings last updated ${fmtDate(latestDate())} · Ask Dad to refresh with Claude for the latest results`;
 
