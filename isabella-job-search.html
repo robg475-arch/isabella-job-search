@@ -247,7 +247,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">28</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">30</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -651,6 +651,30 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Services Advocate',
+    employer: 'Henry County District Attorney\'s Office',
+    location: 'Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/5344960',
+    hot: false, note: 'BA in social work/CJ req.; DA\'s Office', dateAdded: '2026-05-24', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Probation Officer I',
+    employer: 'Henry County Government',
+    location: 'Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/newprint/5012057',
+    hot: false, note: 'BA in CJ/behavioral science req.; entry level', dateAdded: '2026-05-24', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Senior Municipal Court Clerk',
+    employer: 'City of Acworth',
+    location: 'Acworth, Cobb County, GA', source: 'City of Acworth',
+    url: 'https://acworth.applicantstack.com/x/detail/a2kjnllmzdiw',
+    hot: false, note: '$23.34/hr, open until filled', dateAdded: '2026-05-18', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Public Safety Ambassador',
+    employer: 'City of Marietta',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/mPecsFGATS/Public-Safety-Ambassador',
+    hot: false, note: '$19.82–$22.61/hr, civilian (non-sworn), entry level, open until filled', dateAdded: '2026-05-18', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim/Witness Advocate',
     employer: 'Fulton County District Attorney\'s Office',
