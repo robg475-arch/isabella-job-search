@@ -3,6 +3,20 @@
 *.env
 .env.*
 
+# Personal documents
+*.docx
+*.pdf
+Transcript/
+
+# Screenshots and debug files
+*.png
+*.html
+page_source*.html
+jobs_page_source.html
+
+# Scraped data (can be regenerated)
+handshake_jobs.json
+
 # OS / editor junk
 .DS_Store
 Thumbs.db
