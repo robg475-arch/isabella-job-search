@@ -281,7 +281,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">53</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">56</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -872,6 +872,43 @@ function showTab(id, btn) {
 
 const JOBS = [
 
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate',
+    employer: 'Henry County District Attorney\'s Office',
+    location: 'McDonough, Henry County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/flint-judicial-circuit-12/',
+    hot: true, note: 'Deadline Jun 5, 2026; $57,355/yr; BA in CJ/human services req.', dateAdded: '2026-05-25', expired: false },
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate - Bartow County',
+    employer: 'District Attorney\'s Office, Cherokee Judicial Circuit',
+    location: 'Cartersville, Bartow County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/cherokee-judicial-circuit-3/',
+    hot: false, note: 'Closes Jun 22, 2026; BA in CJ/social work pref.; ~20 mi from Woodstock', dateAdded: '2026-05-25', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Trial Assistant',
+    employer: 'Gwinnett County Solicitor-General\'s Office',
+    location: 'Lawrenceville, Gwinnett County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/gwinnett-solicitor-generals-office/',
+    hot: false, note: 'Closes Jun 30, 2026; $34,874–$52,500; legal doc prep, prosecution office', dateAdded: '2026-05-25', expired: false },
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Deputy Court Administrator',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/5338062/deputy-court-administrator',
+    hot: true, note: 'Req. CJ or related degree + exp.; closes 6/11/2026', dateAdded: '2026-05-24', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Court Reporter',
+    employer: 'Fulton County Superior Court',
+    location: 'Atlanta, Fulton County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/fulton/jobs/5149427/court-reporter-grade-k4',
+    hot: false, note: 'Stenotype certification req.; open until filled', dateAdded: '2026-05-24', expired: false },
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Deputy Clerk I - Board of Equalization',
+    employer: 'Henry County Government',
+    location: 'McDonough, Henry County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/henryga/jobs/5343488/deputy-clerk-i-board-of-equalization',
+    hot: false, note: 'Entry level, open until filled', dateAdded: '2026-05-24', expired: false },
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Services Advocate',
     employer: 'Henry County District Attorney\'s Office',
