@@ -29,6 +29,8 @@ PASSWORD = os.getenv('HANDSHAKE_PASSWORD')
 SEARCH_KEYWORDS = [
     'criminal justice',
     'forensic',
+    'forensic technician',
+    'forensic science',
     'crime scene',
     'victim advocate',
     'court clerk',
