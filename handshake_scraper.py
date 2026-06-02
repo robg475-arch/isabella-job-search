@@ -33,7 +33,9 @@ SEARCH_KEYWORDS = [
     'victim advocate',
     'court clerk',
     'probation',
-    'legal assistant'
+    'legal assistant',
+    'evidence technician',
+    'evidence tech'
 ]
 
 class HandshakeScraper:
