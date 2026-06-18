@@ -283,7 +283,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">56</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">42</span></button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
   <button class="tab-btn" onclick="showTab('govt', this)">🏛️ Gov &amp; Services</button>
@@ -881,6 +881,20 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Court Reporter (Superior Court Div 5)',
+    employer: 'Gwinnett County Superior Court',
+    location: 'Lawrenceville, Gwinnett County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/gwinnett/jobs/5379842/court-reporter-superior-court-div-5',
+    hot: true, note: 'NEW! Transcribe verbatim court testimony; requires certification', dateAdded: '2026-06-18', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate',
+    employer: 'Barrow County Solicitor-General\'s Office',
+    location: 'Winder, Barrow County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/barrow-county-solicitor-generals-office-2/',
+    hot: true, note: 'Deadline Jun 19, 2026; $55,039–$88,063; BA in CJ/social work pref.; ~35 mi from Woodstock', dateAdded: '2026-06-15', expired: false },
 
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Advocate',

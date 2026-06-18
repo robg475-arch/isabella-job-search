@@ -45,14 +45,32 @@ class HandshakeScraper:
         """Initialize the scraper with Chrome WebDriver"""
         chrome_options = Options()
         if headless:
-            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--headless=new')  # Use new headless mode
+        
+        # Anti-detection options
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         chrome_options.add_argument('--window-size=1920,1080')
+        chrome_options.add_argument('--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+        
+        # Disable automation flags
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
         
         # Use webdriver_manager to automatically get the correct ChromeDriver version
         service = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=service, options=chrome_options)
+        
+        # Remove webdriver property to avoid detection
+        self.driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
+            'source': '''
+                Object.defineProperty(navigator, 'webdriver', {
+                    get: () => undefined
+                })
+            '''
+        })
+        
         self.wait = WebDriverWait(self.driver, 15)
         self.jobs = []
     
@@ -67,10 +85,15 @@ class HandshakeScraper:
             print("Looking for UGA SSO link...")
             sso_link = None
             
-            # Try to find the UGA SSO link
+            # Wait for the SSO link to appear and click it
             try:
-                sso_link = self.driver.find_element(By.PARTIAL_LINK_TEXT, "University of Georgia")
-            except NoSuchElementException:
+                print("Waiting for UGA SSO link to load...")
+                sso_link = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "University of Georgia"))
+                )
+                print("Found UGA SSO link!")
+            except TimeoutException:
+                print("Timeout waiting for SSO link, trying alternate selectors...")
                 try:
                     sso_link = self.driver.find_element(By.PARTIAL_LINK_TEXT, "Sign On")
                 except NoSuchElementException:
@@ -80,61 +103,73 @@ class HandshakeScraper:
                         pass
             
             if sso_link:
-                print("Found UGA SSO link, clicking...")
+                print("Clicking UGA SSO link...")
                 sso_link.click()
-                time.sleep(5)
+                time.sleep(3)
             else:
                 print("Could not find UGA SSO link - may already be on login page")
-            
-            # Save screenshot
-            self.driver.save_screenshot('sso_page.png')
-            print(f"Current URL: {self.driver.current_url}")
-            print(f"Page title: {self.driver.title}")
             
             # Now we should be on UGA's CAS login page
             print("Looking for UGA login fields...")
             
-            # Try to find username field (UGA CAS uses 'username')
+            # Wait for the username field to be present (use explicit wait instead of sleep)
             username_field = None
-            selectors = [
-                (By.ID, "username"),
-                (By.NAME, "username"),
-                (By.ID, "userNameInput"),
-                (By.NAME, "j_username"),
-                (By.CSS_SELECTOR, "input[type='text']"),
-                (By.CSS_SELECTOR, "input[name*='user']")
-            ]
-            
-            for by, selector in selectors:
-                try:
-                    username_field = self.driver.find_element(by, selector)
-                    print(f"Found username field: {by}={selector}")
-                    break
-                except NoSuchElementException:
-                    continue
+            try:
+                print("Waiting for username field to load...")
+                username_field = WebDriverWait(self.driver, 15).until(
+                    EC.presence_of_element_located((By.ID, "username"))
+                )
+                print("Found username field with ID 'username'")
+            except TimeoutException:
+                print("Timeout waiting for username field, trying alternate selectors...")
+                # Try fallback selectors
+                selectors = [
+                    (By.NAME, "username"),
+                    (By.ID, "userNameInput"),
+                    (By.NAME, "j_username"),
+                    (By.CSS_SELECTOR, "input[type='text']"),
+                    (By.CSS_SELECTOR, "input[name*='user']")
+                ]
+                
+                for by, selector in selectors:
+                    try:
+                        username_field = self.driver.find_element(by, selector)
+                        print(f"Found username field: {by}={selector}")
+                        break
+                    except NoSuchElementException:
+                        continue
             
             if not username_field:
                 print("ERROR: Could not find username field on UGA SSO page")
                 self.driver.save_screenshot('no_username_field.png')
+                print(f"Current URL: {self.driver.current_url}")
+                print(f"Page title: {self.driver.title}")
                 return False
             
-            # Find password field
+            # Find password field with explicit wait
             password_field = None
-            password_selectors = [
-                (By.ID, "password"),
-                (By.NAME, "password"),
-                (By.ID, "passwordInput"),
-                (By.NAME, "j_password"),
-                (By.CSS_SELECTOR, "input[type='password']")
-            ]
-            
-            for by, selector in password_selectors:
-                try:
-                    password_field = self.driver.find_element(by, selector)
-                    print(f"Found password field: {by}={selector}")
-                    break
-                except NoSuchElementException:
-                    continue
+            try:
+                print("Waiting for password field to load...")
+                password_field = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "password"))
+                )
+                print("Found password field with ID 'password'")
+            except TimeoutException:
+                print("Timeout waiting for password field, trying alternate selectors...")
+                password_selectors = [
+                    (By.NAME, "password"),
+                    (By.ID, "passwordInput"),
+                    (By.NAME, "j_password"),
+                    (By.CSS_SELECTOR, "input[type='password']")
+                ]
+                
+                for by, selector in password_selectors:
+                    try:
+                        password_field = self.driver.find_element(by, selector)
+                        print(f"Found password field: {by}={selector}")
+                        break
+                    except NoSuchElementException:
+                        continue
             
             if not password_field:
                 print("ERROR: Could not find password field")
@@ -398,127 +433,103 @@ class HandshakeScraper:
         job_count = 0
         
         try:
-            # Find job cards/listings - try multiple Handshake selectors
-            job_elements = []
+            # Find the main jobs list region (not sidebar or similar jobs)
+            try:
+                jobs_list_region = self.driver.find_element(By.CSS_SELECTOR, "main [role='region']")
+            except:
+                jobs_list_region = self.driver.find_element(By.TAG_NAME, "main")
             
-            selectors_to_try = [
-                "[data-hook='search-result']",
-                "[data-hook='posting-card']",
-                ".posting-card",
-                ".job-card",
-                "article[data-hook]",
-                "div[data-hook*='job']",
-                "div[data-hook*='posting']",
-                "[role='article']",
-                ".styles_posting",
-                "a[href*='/jobs/']",
-                "a[href*='/postings/']"
-            ]
+            # Find job buttons within the jobs list (not link elements)
+            # Job cards are buttons with regions inside them
+            job_buttons = jobs_list_region.find_elements(By.CSS_SELECTOR, "button")
             
-            for selector in selectors_to_try:
-                job_elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
-                if job_elements:
-                    print(f"Found {len(job_elements)} job elements with selector: {selector}")
-                    break
+            # Filter to buttons that look like job cards (contain "ago" or "New")
+            job_buttons = [btn for btn in job_buttons if 'ago' in btn.text or 'New' in btn.text]
             
-            if not job_elements:
-                print(f"No job elements found. Trying to debug...")
-                # Debug: show what's on the page
-                page_text = self.driver.find_element(By.TAG_NAME, 'body').text
-                if 'no results' in page_text.lower() or 'no jobs' in page_text.lower():
-                    print(f"  Page shows 'no results' for keyword: {keyword}")
-                else:
-                    print(f"  Page has content but no recognizable job cards")
-                    # Save page source for debugging
-                    with open(f'page_source_{keyword.replace(" ", "_")}.html', 'w', encoding='utf-8') as f:
-                        f.write(self.driver.page_source)
-                    print(f"  Saved page source to page_source_{keyword.replace(' ', '_')}.html")
+            if not job_buttons:
+                print(f"No job cards found for keyword: {keyword}")
                 return 0
             
-            for idx, job_elem in enumerate(job_elements[:25], 1):  # Limit to first 25 results
+            print(f"Found {len(job_buttons)} job cards")
+            
+            for idx, button in enumerate(job_buttons[:25], 1):  # Limit to first 25 results
                 try:
-                    # Try to get all text from the job element for debugging
-                    job_text = job_elem.text.strip()
-                    if not job_text or len(job_text) < 10:
-                        continue  # Skip empty or very short elements
+                    # Get all text from button
+                    full_text = button.text.strip()
                     
-                    # Extract job title - try multiple selectors
-                    title = None
-                    title_selectors = [
-                        "h3", "h4", ".job-title", "[data-hook='title']",
-                        "a[data-hook]", "div[data-hook*='title']"
-                    ]
+                    # Skip empty buttons
+                    if not full_text or len(full_text) < 20:
+                        continue
                     
-                    for sel in title_selectors:
-                        try:
-                            title_elem = job_elem.find_element(By.CSS_SELECTOR, sel)
-                            title = title_elem.text.strip()
-                            if title and len(title) > 5:
-                                break
-                        except NoSuchElementException:
-                            continue
-                    
-                    if not title:
-                        # Try getting first line of text as title
-                        lines = job_text.split('\n')
-                        title = lines[0] if lines else None
-                    
-                    if not title or len(title) < 5:
-                        continue  # Skip if no valid title found
-                    
-                    # Get employer
-                    employer = "Not specified"
-                    employer_selectors = [
-                        ".employer-name", "[data-hook='employer-name']",
-                        "[data-hook*='company']", "span[data-hook]"
-                    ]
-                    
-                    for sel in employer_selectors:
-                        try:
-                            employer_elem = job_elem.find_element(By.CSS_SELECTOR, sel)
-                            emp_text = employer_elem.text.strip()
-                            if emp_text and len(emp_text) > 2:
-                                employer = emp_text
-                                break
-                        except NoSuchElementException:
-                            continue
-                    
-                    # Get location
-                    location = "Georgia"
-                    location_selectors = [
-                        ".location", "[data-hook='location']",
-                        "[data-hook*='location']", "span[data-hook*='location']"
-                    ]
-                    
-                    for sel in location_selectors:
-                        try:
-                            location_elem = job_elem.find_element(By.CSS_SELECTOR, sel)
-                            loc_text = location_elem.text.strip()
-                            if loc_text and len(loc_text) > 2:
-                                location = loc_text
-                                break
-                        except NoSuchElementException:
-                            continue
-                    
-                    # Get job URL
-                    job_url = self.driver.current_url
+                    # Find the region element inside the button that contains structured data
                     try:
-                        link_elem = job_elem.find_element(By.CSS_SELECTOR, "a[href*='/jobs/'], a[href*='/postings/']")
-                        job_url = link_elem.get_attribute('href')
-                    except NoSuchElementException:
-                        # Try to find any link within the element
-                        try:
-                            link_elem = job_elem.find_element(By.TAG_NAME, "a")
-                            href = link_elem.get_attribute('href')
-                            if href and ('job' in href.lower() or 'posting' in href.lower()):
-                                job_url = href
-                        except:
-                            pass
+                        region = button.find_element(By.CSS_SELECTOR, "[role='region']")
+                        # Get child elements of the region
+                        children = region.find_elements(By.XPATH, "./*")
+                        texts = [child.text.strip() for child in children if child.text.strip()]
+                        
+                        # Standard pattern: [Company, Title, Salary/Type, Location, Posted]
+                        company = texts[0] if len(texts) > 0 else "Not specified"
+                        title = texts[1] if len(texts) > 1 else "Unknown Position"
+                        salary_type = texts[2] if len(texts) > 2 else ""
+                        location = texts[3] if len(texts) > 3 else "Georgia"
+                        posted = texts[4] if len(texts) > 4 else ""
+                        
+                    except:
+                        # Fallback: parse from full text
+                        # Pattern: CompanyTitleSalary·TypeLocation∙Date
+                        import re
+                        
+                        company = "Not specified"
+                        title = "Unknown Position"
+                        location = "Georgia"
+                        
+                        # Try to extract using regex patterns
+                        # Look for location pattern (City, ST or Remote)
+                        loc_match = re.search(r'((?:[A-Z][a-z]+(?: [A-Z][a-z]+)*, [A-Z]{2})|Remote|Athens, GA|Atlanta, GA)', full_text)
+                        if loc_match:
+                            location = loc_match.group(1).split('+')[0].strip()
+                        
+                        # Company is usually at the start (before salary/type indicators)
+                        parts = re.split(r'(?=\$\d+|\d+K|Full-time|Part-time|Internship)', full_text, 1)
+                        if len(parts) > 0:
+                            first_part = parts[0]
+                            # Split by newline or common separators
+                            lines = [l.strip() for l in first_part.replace('∙', '\n').split('\n') if l.strip()]
+                            if len(lines) >= 2:
+                                company = lines[0]
+                                title = lines[1]
+                            elif len(lines) == 1:
+                                title = lines[0]
+                    
+                    # Try to find the job URL - click would navigate away, so we construct it
+                    # Look for job ID in the button's onclick or data attributes
+                    job_url = None
+                    try:
+                        # Try to find a link within or near the button
+                        # Actually, let's use JavaScript to get the job ID from the button's event or parent
+                        job_id = self.driver.execute_script("""
+                            const btn = arguments[0];
+                            // Look for a parent or sibling with job ID
+                            const text = btn.innerText || '';
+                            return null;  // We'll construct URL differently
+                        """, button)
+                        
+                        # Alternative: extract from button text or nearby elements
+                        # For now, use the search results URL as fallback
+                        job_url = self.driver.current_url
+                        
+                    except:
+                        job_url = self.driver.current_url
+                    
+                    # Validate we got reasonable data
+                    if len(title) < 5 or title == "Unknown Position":
+                        continue
                     
                     # Create job object
                     job = {
                         'title': title,
-                        'employer': employer,
+                        'employer': company,
                         'location': location,
                         'url': job_url,
                         'source': 'UGA Handshake',
@@ -526,11 +537,11 @@ class HandshakeScraper:
                         'scraped_at': datetime.now().isoformat()
                     }
                     
-                    # Check for duplicates
-                    if not any(j['title'] == title and j['employer'] == employer for j in self.jobs):
+                    # Check for duplicates (by title + company)
+                    if not any(j['title'] == title and j['employer'] == company for j in self.jobs):
                         self.jobs.append(job)
                         job_count += 1
-                        print(f"  ✓ {title} - {employer}")
+                        print(f"  ✓ {title[:50]} - {company[:35]}")
                 
                 except Exception as e:
                     # Only show first few errors to avoid spam
@@ -591,29 +602,36 @@ def main():
         print("ERROR: Missing credentials in .env file")
         return
     
-    scraper = HandshakeScraper(headless=False)  # Set to True for production
+    scraper = HandshakeScraper(headless=True)  # Use headless mode for automated runs
     
     try:
         # Login
+        print("\n[1/4] Attempting login...")
         if not scraper.login():
             print("Login failed, exiting...")
             return
+        print("✓ Login successful!")
         
         # Navigate to Jobs section
+        print("\n[2/4] Navigating to Jobs section...")
         if not scraper.navigate_to_jobs():
             print("Could not navigate to Jobs section, exiting...")
             return
+        print("✓ Successfully navigated to Jobs")
         
         # Search for each keyword
-        for keyword in SEARCH_KEYWORDS:
+        print(f"\n[3/4] Searching for jobs with {len(SEARCH_KEYWORDS)} keywords...")
+        for i, keyword in enumerate(SEARCH_KEYWORDS, 1):
+            print(f"  [{i}/{len(SEARCH_KEYWORDS)}] Searching for '{keyword}'...")
             scraper.search_jobs(keyword)
             time.sleep(3)  # Wait between searches
         
         # Save results
+        print(f"\n[4/4] Saving {len(scraper.jobs)} jobs to file...")
         scraper.save_jobs()
         
         print("\n" + "=" * 60)
-        print(f"Scraping complete! Found {len(scraper.jobs)} unique jobs")
+        print(f"✓ Scraping complete! Found {len(scraper.jobs)} unique jobs")
         print("=" * 60)
         
     except KeyboardInterrupt:
