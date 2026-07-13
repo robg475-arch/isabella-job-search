@@ -283,7 +283,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">43</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">49</span></button>
   <button class="tab-btn" onclick="showTab('entrylevel', this)">🎓 Entry-Level</button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
@@ -1035,6 +1035,52 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+
+  // ══ NEW JOBS ADDED July 13, 2026 ══
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Judicial Administrative Technician',
+    employer: 'Cobb County Solicitor General\'s Office',
+    location: 'Marietta, Cobb County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/cobb-county-solicitor-generals-office-3/',
+    hot: true, note: 'NEW! Deadline Jul 24, 2026; Document management, case docketing, data entry', dateAdded: '2026-07-13', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Investigator',
+    employer: 'Cobb County Solicitor General\'s Office',
+    location: 'Marietta, Cobb County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/cobb-county-solicitor-generals-office-2/',
+    hot: true, note: 'NEW! Deadline Jul 24, 2026; Support prosecutors, conduct investigations', dateAdded: '2026-07-13', expired: false },
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Administrative Specialist - District Attorney',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/5348645/administrative-specialist',
+    hot: true, note: 'NEW! Deadline Jul 15, 2026; $40,635/yr; DA\'s Office', dateAdded: '2026-07-13', expired: false },
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Administrative Specialist - Magistrate Court',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/5317168/administrative-specialist',
+    hot: false, note: 'Deadline Jul 23, 2026; $40,635/yr; Court admin role', dateAdded: '2026-07-13', expired: false },
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Administrative Specialist - Solicitor\'s Office',
+    employer: 'Forsyth County Government',
+    location: 'Cumming, Forsyth County, GA', source: 'GovernmentJobs',
+    url: 'https://www.governmentjobs.com/careers/forsyth/jobs/5375337/administrative-specialist',
+    hot: false, note: 'Deadline Jul 16, 2026; $40,635-$52,825/yr; Prosecution support', dateAdded: '2026-07-13', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Prisoner Transport Officer',
+    employer: 'City of Marietta Police Department',
+    location: 'Marietta, Cobb County, GA', source: 'City of Marietta',
+    url: 'https://cityofmariettaga.applytojob.com/apply/wgE1jlKCvx/Prisoner-Transport-Officer',
+    hot: true, note: 'NEW! Entry-level police dept civilian role; open until filled', dateAdded: '2026-07-13', expired: false },
+
+  // ══ PREVIOUS JOBS ══
 
   { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
     title: 'Victim Witness Advocate (Juvenile Unit)',
