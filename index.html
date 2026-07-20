@@ -277,7 +277,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">49</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">52</span></button>
   <button class="tab-btn" onclick="showTab('entrylevel', this)">🎓 Entry-Level</button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
@@ -1029,6 +1029,29 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+
+  // ══ NEW JOBS ADDED July 20, 2026 ══
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Investigator',
+    employer: 'Cherokee County Solicitor-General\'s Office',
+    location: 'Canton, Cherokee County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/cherokee-county-solicitor-generals-office-4/',
+    hot: false, note: 'Deadline Aug 31, 2026; Support prosecution of misdemeanor cases; Cherokee County — closest to home', dateAdded: '2026-07-20', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Investigator - Juvenile Division',
+    employer: 'DeKalb County District Attorney\'s Office',
+    location: 'Decatur, DeKalb County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/dekalb-judicial-circuit-2/',
+    hot: true, note: 'Deadline Jul 31, 2026; Investigates crimes involving juveniles; County Paid', dateAdded: '2026-07-20', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Investigator - Domestic Violence/Sexual Assault',
+    employer: 'DeKalb County District Attorney\'s Office',
+    location: 'Decatur, DeKalb County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/dekalb-judicial-circuit/',
+    hot: true, note: 'Deadline Jul 31, 2026; DVSA Unit investigations; County Paid', dateAdded: '2026-07-20', expired: false },
 
   // ══ NEW JOBS ADDED July 13, 2026 ══
 
