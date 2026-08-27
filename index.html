@@ -277,7 +277,7 @@
 </div>
 
 <div class="tabs-wrap">
-  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">52</span></button>
+  <button class="tab-btn active" onclick="showTab('listings', this)">📋 Current Listings <span class="new-badge">55</span></button>
   <button class="tab-btn" onclick="showTab('entrylevel', this)">🎓 Entry-Level</button>
   <button class="tab-btn" onclick="showTab('forensics', this)">🔬 Forensics</button>
   <button class="tab-btn" onclick="showTab('court', this)">⚖️ Court &amp; Office</button>
@@ -1029,6 +1029,29 @@ function showTab(id, btn) {
 // show "⚠️ Closed" on expired listings and keep them visible for reference.
 
 const JOBS = [
+
+  // ══ NEW JOBS ADDED August 27, 2026 ══
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Junior Victim Advocate',
+    employer: 'Cobb County Solicitor General\'s Office',
+    location: 'Marietta, Cobb County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/cobb-solicitor-generals-office-2/',
+    hot: true, note: 'Deadline Aug 31, 2026; entry-level victim advocate; works with victims/witnesses; ~20 mi from Woodstock', dateAdded: '2026-08-27', expired: false },
+
+  { cat: 'court', icon: '⚖️', catLabel: 'Court & Office',
+    title: 'Legal Assistant',
+    employer: 'Douglas County Solicitor-General\'s Office',
+    location: 'Douglasville, Douglas County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/douglas-solicitor-generals-office/',
+    hot: false, note: 'Deadline Sep 30, 2026; paralegal/secretarial skills; contact with victims, courts & attorneys', dateAdded: '2026-08-27', expired: false },
+
+  { cat: 'govt', icon: '🏛️', catLabel: 'Gov & Victim Services',
+    title: 'Victim Witness Advocate (Trial Line)',
+    employer: 'Henry County District Attorney\'s Office (Flint Judicial Circuit)',
+    location: 'McDonough, Henry County, GA', source: 'PACGA',
+    url: 'https://pacga.org/employment-opportunities/henry-county-district-attorneys-office-flint-judicial-circuit-2/',
+    hot: false, note: 'Deadline Sep 11, 2026; works closely with victims/witnesses; ~55 mi from Woodstock', dateAdded: '2026-08-27', expired: false },
 
   // ══ NEW JOBS ADDED August 5, 2026 ══
 
